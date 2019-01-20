@@ -9,8 +9,8 @@
             "command": "gcc",
             "args": [
                 "-o",
-                "week2/vigenere",
-                "week2/vigenere.c"
+                "week3/string_compare",
+                "week3/string_compare.c"
             ],
             "group": {
                 "kind": "build",

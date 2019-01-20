@@ -33,8 +33,11 @@ Notes for CS50x Introduction to Computer Science.
     char y = 'X'; // initialization
 ```
 > Included in <cs50.h>
-- `bool` true or false values.
-- `string` string data type.
+- `bool` true or false values / 1 and 0.
+- `string` string data type == array of characters `char str[size]`.
+- `int x;` integer variable
+- `x` x variable
+- `&x` address of x
 
 ### Loops in C
 while loop

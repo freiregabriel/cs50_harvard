@@ -9,8 +9,8 @@
             "command": "gcc",
             "args": [
                 "-o",
-                "week3/string_compare",
-                "week3/string_compare.c"
+                "week3/resize",
+                "week3/resize.c"
             ],
             "group": {
                 "kind": "build",

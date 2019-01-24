@@ -70,12 +70,13 @@ int main(int argc, char *argv[])
 }
 
 void resize(BITMAPFILEHEADER bf, BITMAPINFOHEADER bi, int resize_num, FILE* inptr, FILE* outptr) {
-    int _orig_width = bi.biWidth;
-    int _orig_height = bi.biHeight;
+    int _orig_width = abs(bi.biWidth);
+    int _orig_height = abs(bi.biHeight);
     
     bi.biWidth *= resize_num;
     bi.biHeight *= resize_num;
     
+    int r_padding = (4 - (_orig_width * sizeof(RGBTRIPLE)) % 4) % 4;
     int padding = (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
     
     bi.biSizeImage = ((sizeof(RGBTRIPLE) * bi.biWidth) + padding) * abs(bi.biHeight);
@@ -87,29 +88,27 @@ void resize(BITMAPFILEHEADER bf, BITMAPINFOHEADER bi, int resize_num, FILE* inpt
     fwrite(&bi, sizeof(BITMAPINFOHEADER), 1, outptr);
 
     // iterate over infile's scanlines
-    for (int i = 0, biHeight = abs(_orig_height); i < biHeight; i++)
+    int biHeight = _orig_height;
+    for (int i = 0; i < biHeight; i++)
     {
         // iterate over pixels in scanline
-        RGBTRIPLE triples[_orig_width];
-        for (int j = 0; j < _orig_width; j++)
-        {
-            // temporary storage
-            RGBTRIPLE triple;
-            // read RGB triple from infile
-            fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
-            triples[j] = triple;
-        }
         for (int y = 0; y < resize_num; y++) {
             for (int j = 0; j < _orig_width; j++) {
-                for(int x = 0; x < resize_num; x++) {
-                    fwrite(&triples[j], sizeof(RGBTRIPLE), 1, outptr);
-                }
+                // temporary storage
+                RGBTRIPLE triple;
+                // read RGB triple from infile
+                fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
+                // write <resize_num> x 2
+                for(int x = 0; x < resize_num; x++)
+                    fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
             }
+            for (int k = 0; k < r_padding; k++)
+                fputc(0x00, outptr);
+
+            if (y < resize_num - 1) 
+                fseek(inptr, -_orig_width * sizeof(RGBTRIPLE), SEEK_CUR);
         }
+        // skip padding if any
         fseek(inptr, padding, SEEK_CUR);
-        for (int k = 0; k < padding; k++)
-        {
-            fputc(0x00, outptr);
-        }
     }
 }

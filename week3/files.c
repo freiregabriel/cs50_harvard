@@ -31,8 +31,8 @@ void cat (FILE* source);
     //
 
     -- resize --
-    biSizeImage = ((sizeof(RGBTRIPLE) * bi.biWidth) + padding) * abs(bi.biHeight);
-    bfSize = bi.biSizeImage + sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER);
+    new_biSizeImage = ((sizeof(RGBTRIPLE) * bi_new.biWidth) + new_padding) * abs(bi_new.biHeight);
+    new_bfSize = bf.bfSize - bi.biSizeImage + bi_new.biSizeImage;
 
     bi.biWidth *= n;
     bi.biHeight *= n;

@@ -9,8 +9,8 @@
             "command": "gcc",
             "args": [
                 "-o",
-                "week3/resize",
-                "week3/resize.c"
+                "week4/struct0",
+                "week4/struct0.c"
             ],
             "group": {
                 "kind": "build",

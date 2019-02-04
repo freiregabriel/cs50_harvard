@@ -5,12 +5,13 @@ typedef struct {
 student;
 
 
-typedef struct Node {
-    int number;
-    struct Node* next;
-}Node;
 
-typedef struct {
-    int head;
-    int tail;
-}LinkedList;
+struct car {
+    int year;
+    char model[10];
+    char plate[7];
+    int odometer;
+    double engine_size;
+};
+typedef struct car car_t;
+

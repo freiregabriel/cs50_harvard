@@ -4,43 +4,51 @@
 #include <ctype.h>
 #include "trie.h"
 
-t_node* insert (t_node* root, char* word);
-int search (t_node* root, char* word);
-void destroy (t_node* *current_node);
 
 int main(void) {
-    t_node* root = malloc(sizeof(t_node));
+    node* root = malloc(sizeof(node));
     root->is_word = 0;
+    for (int i = 0; i < N; i++) {
+        root->children[i] = NULL;
+    }
+    printf("will insert");
     root = insert(root, "dog");
     root = insert(root, "do");
     root = insert(root, "dont");
     printf("Contains do ? %i\n", search(root, "do"));
     printf("Contains dog ? %i\n", search(root, "dog"));
     printf("Contains dont ? %i\n", search(root, "dont"));
-    printf("freeing...");
+    printf("freeing...\n");
     destroy(&root);
-    printf("freed....");
+    printf("freed....\n");
     // free(root);
 }
-t_node* insert (t_node* root, char* word) {
-    int n = strlen(word);
-    t_node* tmp = root;
+
+node* _make_node () {
+    node* new_letter = malloc(sizeof(node));
+    if (new_letter == NULL ) {
+        return NULL;
+    }
+    new_letter->is_word = 0;
+    for (int i = 0; i < N; i++) {
+        new_letter->children[i] = NULL;
+    }
+    return new_letter;
+}
+node* insert (node* root, const char* word) {
+    node* tmp = root;
     while (*word) {
         int letter_idx = isupper(*word) ? *word - 'A' : *word - 'a';
-        if (tmp->children[letter_idx] != NULL) {
-            tmp = tmp->children[letter_idx];
-        } else {
-            t_node* new_letter = malloc(sizeof(t_node));
-            if (new_letter == NULL ) {
+        if (tmp->children[letter_idx] == NULL) {
+            node* new_letter = _make_node();
+            if (new_letter == NULL) {
                 printf("out of memory");
                 break;
             }
-            new_letter->is_word = 0;
-            for (int i = 0; i < 27; i++) {
-                new_letter->children[i] = NULL;
-            }
             tmp->children[letter_idx] = new_letter;
             tmp = new_letter;
+        } else {
+            tmp = tmp->children[letter_idx];
         }
         word++;
     }
@@ -48,13 +56,14 @@ t_node* insert (t_node* root, char* word) {
     return root;
 }
 
-int search (t_node* root, char* word) {
+int search (node* root, const char* word) {
     if (root == NULL) {
         return 0;
     }
-    t_node* tmp = root;
+    node* tmp = root;
     while (*word) {
-        tmp = tmp->children[*word - 'a'];
+        int letter_index = isupper(*word) ? *word - 'A' : *word - 'a';
+        tmp = tmp->children[letter_index];
         if(tmp == NULL) {
             return 0;
         }
@@ -63,24 +72,15 @@ int search (t_node* root, char* word) {
     return tmp->is_word; // found, check if its a word
 }
 
-int hasChildren (t_node* node) {
-    for (int i = 0; i < 27; i++) {
-        if (node->children[i]) {
-            return 1;
-        }
-    }
-    return 0;
-}
-
-void destroy (t_node* *current_node) {
-    int i;
+bool destroy (node* *current_node) {
     if (current_node == NULL || *current_node == NULL) {
-        return;
+        return false;
     }
-    for (i = 0; i < 27; i++) {
-        printf("%i\n", i);
+    for (int i = 0; i < N; i++) {
+        // printf("%i\n", i);
         destroy(&((*current_node)->children[i]));
     }
     free(*current_node);
-    
+    return true;
+
 }

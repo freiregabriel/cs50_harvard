@@ -9,8 +9,8 @@
             "command": "gcc",
             "args": [
                 "-o",
-                "week4/linkedlist",
-                "week4/linkedlist.c"
+                "week4/trie",
+                "week4/trie.c"
             ],
             "group": {
                 "kind": "build",

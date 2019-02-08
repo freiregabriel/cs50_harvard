@@ -84,18 +84,37 @@
                     </tr>
                 </tbody>
             </table>
-            <form action="http://www.google.com/search" method="get">
-                <input name="q" type="text">
-                <input type="submit" value="Search">
-            </form>
-            <form onsubmit="greet(text); return false;">
-                <input name="text" type="text">
-                <input type="submit" value="Search">
-            </form>
+            <div>
+                <form action="http://www.google.com/search" method="get">
+                    <input name="q" type="text">
+                    <input type="submit" value="Search">
+                </form>
+            </div>
+            <div>
+                <form onsubmit="greet(text); return false;">
+                    <input name="text" type="text" placeholder="Text">
+                    <input name="pass" type="password" placeholder="Password">
+                    <input name="email" type="email" placeholder="E-mail">
+                    <input name="checkbox" type="checkbox">
+                    <input name="radio" type="radio">
+                    <input type="submit" value="Search" placeholder="Text">
+                </form>
+            </div>
             <button name="red" onclick="setColor('red');">R</button>
             <button name="green" onclick="setColor('green');">G</button>
             <button name="blue" onclick="setColor('blue');">B</button>
             <p class="large bold" id="to-blink">blinking</p>
+            <br>
+            <ul>
+                <li>Nice list</li>
+                <li>Great list</li>
+                <li>Amazing list</li>
+            </ul>
+            <ol start=4>
+                <li>Nice list</li>
+                <li>Great list</li>
+                <li>Amazing list</li>
+            </ol>
         </main>
         <footer class="small">
             <p>Copyright &#169; Gabriel Freire</p>
@@ -109,8 +128,8 @@
                 body.style.background = color;
             }
             
+            let toBlink = document.querySelector('#to-blink');
             function showhide() {
-                let toBlink = document.querySelector('#to-blink');
                 if (toBlink.style.visibility == 'hidden') {
                     toBlink.style.visibility = 'visible';
                 } else {

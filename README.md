@@ -147,3 +147,107 @@ int main(void) {
     printf("Data Value: %d\n", *pk); /* print the value */
 }
 ```
+
+# Hypertext Transfer Protocol (HTTP)
+is one such example of an application layer protocol, which specifically dictates the format by which clients request web pages from a server, and the format via which servers return information to clients
+### Request
+```
+GET /cats.html HTTP/1.1
+host: cats.com
+```
+### Response
+```
+HTTP 1.1 200 Ok
+Content-Type: text/html
+```
+### Status
+#### success
+- 200 ok, all is well, valid request and response
+
+#### redirect
+- `301` (Moved permanentely): page is now at a new location, automatic redirects built in to most browsers. 
+- `302` (Found): page is now at a new location temporarily
+#### client error
+- `401` (uniauthorized)
+- `403` (forbidden)
+- `404` (not found)
+#### server error
+- `500` (INnternal server error)
+
+## Other application layer protocols include:
+- File Transfer protocol **(FTP)**
+- Simple mail transfer protocol **(SMTP)**
+- Data distribution service **(DDS)**
+- remote desktop protocol **(RDP)**
+- Extensible message and presence protocol **(XMPP)** (used on chat applications)
+
+# IP (internet protocol)
+#### IPv4
+- 127.0.0.1  (range from **0 to 255**)
+#### IPv6
+- 2001:4860:4860:0:0:0:0:8844 (range from **0 to 4 billion**) or 2001:4860:4860::8844 omitting the 0s
+
+#### DHCP (Dynamic host configuration protocol) server 
+is a program that assigns an IP address to you computer on the internet automatically that runs between you and the internet
+
+#### DNS (Domain Name System)
+exists to help us translate/map IP addresses to more memorable names that are more human-comprehensible
+- ***2001:4860:4860::8844*** :-> ***google.com***
+
+- 0.0.0.0 :-> ***info.host1.net***
+- 74.125.202.138 :-> ***google.com***
+
+DNS system doesn't keep records of all DNSs of the world, it is actually a decentralized block that keeps track of the many many DNSs addresses of the world, locally.
+
+Different networks relly on routers to distribute their inter connections
+##### Network 1
+**IP:** 1.X.X.X
+##### Network 2
+**IP:** 2.X.X.X
+##### Network 3
+**IP:** 3.X.X.X
+##### Network 4
+**IP:** 4.X.X.X
+##### Network 5
+**IP:** 5.X.X.X
+
+*Sending message from 1.208.12.37 to 5.188.109.14, **network 1** to **network 4**.*
+ Steps:
+1. Look for network 1
+2. build message
+3. Look for network 5
+4. send message
+
+IP is also known as a connectionless protocol. There is not necessarily a defined path from the sender to the receiver, and vice versa.
+#### packets
+- any slowdown that may be caused by sending such a large amount of data would have a ripple effect that would throttle the network for all the other users
+- as such, another curcial part of IP is splitting data into packets
+
+#### Access Point
+- One of the ways we've dealt with the IPv4 addressing problem is to start assigning multiple people to the same IP address.
+- The IP address is assigned to a router, whose job it is to act as a traffic cop that allows data requests from all of the devices on your local network (your home or business e.g)
+- Modern home networks consist of access points that combine a router, a modem, a switch, and other technologies together into a single device.
+- Modern business networks or large-scale wide-area networks (WANs) still frequently have these as separate devices to allow the size of their network to scale more easily
+
+### Internet connection phases
+**WE(users, companies, etc) -> DHCP Server -> DNS Server -> Access point -> Internet**
+
+### Transmission control protocol (TCP)
+- If the internet protocol (IP) is thought of as the protocol for getting information from a sending machine to a receiving machine, then Transmission control protocol (TCP) can be thought of as directing the transmitted packet to the correct program on the receiving machine.
+
+- Each program/utility/service on a machine is assigned a port number. coupled with an IP address, we can now uniquely identify a specific program on a specific machine.
+- The other thing that TCP is crucial for is guaranteeing delivery of packets, which IP alone does not do.
+- TCP does this by including information about how many packets the receiver should expect to get, and in what order, and transmitting that information alongside the data.
+Some ports are so commonly used that they have been standardized across all computers
+- **FTP** (file transfer) uses port 21.
+- **SMTP** (e-mail transfer) uses port 25.
+- **DNS** (domain system) uses port 53.
+- **HTTP** (web browsing) uses port 80
+- **HTTPS** (secure web browsing) uses port 443
+
+#### Steps of TCP/IP process
+1. When a program goes to send data, tcp breaks it into smaller chunks and communicates those packets to the computer's network software, adding a TCP layer onto the packet
+2. IP routes the individual packets from sender to receiver; this info is part of the IP layer surrounding the packet.
+3. When the destination computer gets the packet, TCP looks at the header to see which program it belongs to.
+4. If at any point along the way something go wrong, TCP can deal with it gracefully using additional information insde the headers to request that the sender passing the extra packet so it could complete assembly.
+5. After the packets have arrived, TCP ensures they are organized the correct order and can then be reassembled into the intended unit of data and delivered to the correct service.

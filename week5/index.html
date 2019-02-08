@@ -1,9 +1,46 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>
             Hello, title
         </title>
-        <link rel="stylesheet" href="./style.css">
+        <style>
+        
+            body {
+                text-align: center;
+            }
+            table {
+                margin: 10px;
+                border: 5px solid rgb(144, 144, 247);
+            }
+            tr {
+                height: 50px;
+            }
+            td {
+                background-color: black;
+                color: white;
+                font-size: 22pt;
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                text-align: center;
+                width: 50px;
+            }
+            main {
+                display: inline-block;
+                margin: 0px auto;
+            }
+            .large {
+                font-size: large;
+            }
+            .medium {
+                font-size: medium;
+            }
+            .small {
+                font-size: small;
+            }
+            .bold {
+                font-weight: 700;
+            }
+        </style>
     </head>
     <body>
         <header class="large">
@@ -12,7 +49,7 @@
             <img src="http://www.gabrielfreire.com.br/assets/images/logo4-mini.png" alt="Some description">
             <br>
             <p>
-                Visit my <a href="http://www.gabrielfreire.com.br">Website</a>
+                Visit my <a href="http://www.gabrielfreire.com.br" target="blank">Website</a>
             </p>
         </header>
         <main class="medium">
@@ -22,7 +59,7 @@
             <h4>Headings</h4>
             <h5>Headings</h5>
             <h6>Headings</h6>
-            <table border="1">
+            <table>
                 <tbody>
                     <tr>
                         <td>1</td>
@@ -51,13 +88,36 @@
                 <input name="q" type="text">
                 <input type="submit" value="Search">
             </form>
+            <form onsubmit="greet(text); return false;">
+                <input name="text" type="text">
+                <input type="submit" value="Search">
+            </form>
+            <button name="red" onclick="setColor('red');">R</button>
+            <button name="green" onclick="setColor('green');">G</button>
+            <button name="blue" onclick="setColor('blue');">B</button>
+            <p class="large bold" id="to-blink">blinking</p>
         </main>
         <footer class="small">
             <p>Copyright &#169; Gabriel Freire</p>
         </footer>
         <script>
-            let counter = 0;
-            console.log(counter++);
+            let body = document.body;
+            function greet(text) {
+                alert ("Hello, " + (text.value || 'World'));
+            }
+            function setColor(color) {
+                body.style.background = color;
+            }
+            
+            function showhide() {
+                let toBlink = document.querySelector('#to-blink');
+                if (toBlink.style.visibility == 'hidden') {
+                    toBlink.style.visibility = 'visible';
+                } else {
+                    toBlink.style.visibility = 'hidden';
+                }
+            }
+            setInterval(showhide, 1000);
         </script>
     </body>
 </html>

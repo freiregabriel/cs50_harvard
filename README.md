@@ -251,3 +251,11 @@ Some ports are so commonly used that they have been standardized across all comp
 3. When the destination computer gets the packet, TCP looks at the header to see which program it belongs to.
 4. If at any point along the way something go wrong, TCP can deal with it gracefully using additional information insde the headers to request that the sender passing the extra packet so it could complete assembly.
 5. After the packets have arrived, TCP ensures they are organized the correct order and can then be reassembled into the intended unit of data and delivered to the correct service.
+
+# Python
+To execute python like `c`
+1. put this on the top of your file 
+```python
+#!/usr/bin/env python3
+```
+2. change permissions on your file `chmod a+x <file>`

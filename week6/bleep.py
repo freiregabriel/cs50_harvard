@@ -1,15 +1,16 @@
-from cs50 import get_string
+# from cs50 import get_string
 from sys import argv
 
 
 def main():
     # validate usage
     if len(argv) != 2:
-        print("Usage: python banned.py dictionary")
+        print("Usage: python banned.py dictionary\n")
         exit(1)
 
     # get user input
-    text = get_string("What message would you like to censor?\n")
+    text = input("What message would you like to censor?\n")
+    # text = get_string("What message would you like to censor?\n")
     file_name = argv[1]
     # open file
     words_list_file = open(file_name, "r")

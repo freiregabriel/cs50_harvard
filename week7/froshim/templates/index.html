@@ -1,13 +1,34 @@
 {% extends "layout.html" %}
 {% block body %}
     <h1>Register for Frosh IMs</h1>
+    <a href="/registrants">Registered Students</a>
     <form action="/register" method="POST">
         <input type="text" placeholder="Name" name="name">
         <select name="dorm">
             <option disabled selected value="">Dorm</option>
             <option value="Apley Court">Apley Court</option>
             <option value="Canaday">Canaday</option>
+            <option value="Greenough">Greenough</option>
+            <option value="Hollis">Hollis</option>
+            <option value="Holworthy">Holworthy</option>
+            <option value="Hurlbut">Hurlbut</option>
+            <option value="Lionel">Lionel</option>
         </select>
         <button type="submit">Register</button>
     </form>
+    <script>
+        let form = document.querySelector('form');
+        form.onsubmit = () => {
+            let inp = document.querySelector('input');
+            let select = document.querySelector('select');
+            if (!inp.value) {
+                alert("You must provide a name");
+                return false;
+            } else if (!select.value) {
+                alert("You must provide a dorm");
+                return false;
+            }
+            return true;
+        }
+    </script>
 {% endblock %}

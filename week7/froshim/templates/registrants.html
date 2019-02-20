@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block body %}
+    <a href="/">Home</a>
+    <ul>
+        <!-- {% for st in students %}
+            <li>{{ st[0] }} - {{ st[1] }} </li>
+        {% endfor %} -->
+    </ul>
+    <script>
+        let ul = document.querySelector('ul');
+        function getRegistrants () {
+            let html = '';
+            let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = () => {
+                // readyState 0, 1, 2, 3, 4 
+                // readyState = 4 (request finished, response ready)
+                // status = 200
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    let _data = xhttp.responseText;
+                    let data = JSON.parse(_data);
+                    for (d of data) {
+                        html += `<li>Student ${d[0]} on dorm ${d[1]}</li>`
+                    }
+                    ul.innerHTML = html;
+                }
+            }
+            xhttp.open("GET", "/registrants_json", true);
+            xhttp.send();
+        }
+        getRegistrants();
+    </script>
+{% endblock %}

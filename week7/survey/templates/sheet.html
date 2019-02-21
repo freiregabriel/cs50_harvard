@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <!--Table to display data from server-->
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>E-mail</td>
+                <td>AI Wish</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in data %}
+                <tr>
+                    <td>{{ d[0] }}</td>
+                    <td>{{ d[1] }}</td>
+                    <td>{{ d[2] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -6,6 +6,10 @@ from numba.decorators import jit
 
 app = Flask(__name__)
 
+# Reload templates when they are changed
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+
+
 @app.after_request
 def after_request(response):
     """Disable caching"""
@@ -14,6 +18,7 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
     
+
 class CSVManager:
     def __init__(self, filename):
         self.filename = filename
@@ -28,6 +33,7 @@ class CSVManager:
         df = pd.read_csv(self.filename)
         nparr = df.values
         return nparr.tolist()
+
 
 csv_manager = CSVManager('registered.csv')
 

@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <!-- Where the error appears -->
+    <div style="visibility: hidden;" class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Error</h4>
+        <p id="error-message"></p>
+    </div>
+    <!-- http://getbootstrap.com/docs/4.1/content/typography/ -->
+    <h1 class="mb-3">Survey form</h1>
+
+    <!-- http://getbootstrap.com/docs/4.1/components/forms/ -->
+    <form action="/form" method="post">
+
+        <!-- Name field-->
+        <div class="form-group">
+            <label class="label-control">Name: </label>
+            <input autocomplete="off" autofocus class="form-control" type="text" name="name">
+        </div>
+        <!-- E-mail field-->
+        <div class="form-group">
+            <label class="label-control">E-mail: </label>
+            <input autocomplete="off" class="form-control" type="email" name="email">
+        </div>
+        <!-- AI Wish field-->
+        <div class="form-group">
+            <label class="label-control">What do you wish to see as a new Artifical Intelligence Service: </label>
+            <textarea rows="3" class="form-control" name="ai_wish"></textarea>
+        </div>
+        <!-- Submit button-->
+        <!-- http://getbootstrap.com/docs/4.1/components/buttons/ -->
+        <button class="btn btn-primary" type="submit">Submit</button>
+
+    </form>
+
+    <script>
+        // get reference from the DOM
+        let name = document.querySelector("input[name='name']");
+        let email = document.querySelector("input[name='email']");
+        let ai = document.querySelector("textarea[name='ai_wish']");
+        let error_alert = document.querySelector(".alert");
+        let error_alert_msg = document.querySelector("#error-message");
+        let btn = document.querySelector('button[type="submit"]');
+        // listen for click on submit button to validate fields
+        btn.onclick = function (e) {
+            if (!name.value) {
+                showError("You must provide a name!");
+                return false;
+            }
+            if (!email.value) {
+                showError("You must provide an e-mail")
+                return false;
+            }
+            if (!ai.value) {
+                showError("You must provide an AI Wish")
+                return false;
+            }
+            return true;
+        }
+
+
+        // Show error message on top of the page if necessary
+        function showError(message) {
+            error_alert.style.visibility = 'visible';
+            error_alert_msg.textContent = message;
+            let time_o = setTimeout(() => {
+                error_alert.style.visibility = 'hidden';
+                clearTimeout(time_o);
+            }, 10000);
+        }
+
+
+    </script>
+
+{% endblock %}

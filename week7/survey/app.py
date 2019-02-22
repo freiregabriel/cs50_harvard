@@ -1,10 +1,11 @@
-import cs50
+# import cs50
 import csv
-
 from flask import Flask, jsonify, redirect, render_template, request
+
 
 # Configure application
 app = Flask(__name__)
+
 
 # Reload templates when they are changed
 app.config["TEMPLATES_AUTO_RELOAD"] = True

@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- FAVICON -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/assets/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/assets/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/assets/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/assets/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/assets/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/assets/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <!-- END -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width = device-width, initial-scale=1">
+    <title>Gabriel Freire</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Josefin+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+    <link href="/stylesheets/vuetify.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+    <style>
+        @font-face {
+            font-family: "fontawesome";
+            src: url(/assets/webfonts/fontawesome-webfont.ttf) format("truetype");
+        }
+        @font-face {
+            font-family: "fontawesome";
+            src: url(/assets/webfonts/fa-solid-900.ttf) format("truetype");
+        }
+        @font-face {
+            font-family: "fontawesome";
+            src: url(/assets/webfonts/fa-regular-400.ttf) format("truetype");
+        }
+        @font-face {
+            font-family: "fontawesome";
+            src: url(/assets/webfonts/fa-brands-400.ttf) format("truetype");
+        }
+    </style>
+</head>
+
+<body>
+    <v-app dark standalone id="app">
+        <v-navigation-drawer absolute dark temporary class="hidden-md-and-up" v-model="sideNav">
+            <v-list>
+                <v-list-tile v-for="item in menuItems" :key="item.title">
+                    <v-list-tile-action>
+                        <v-icon>{{ item.icon }}</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <a style="color:white" :href="item.href">{{ item.title }}</a>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile>
+                    <v-list-tile-action>
+                        <i class="fab fa-github-square"></i>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-btn @click="goToGithub()" flat>
+                            <a id="nav-github-btn" style="text-decoration:none; color:white" href="https://github.com/gabrielfreire" target="_blank"> github.com/gabrielfreire</a>
+                        </v-btn>
+                    </v-list-tile-content>
+                </v-list-tile>
+            </v-list>
+        </v-navigation-drawer>
+        <v-toolbar style="background:rgba(15, 104, 156, 0.3)">
+            <v-toolbar-title left><img alt="Gabriel Freire Portfolio" class="image" id="brand" src="assets/images/logo4-mini.png"></v-toolbar-title>
+            <v-toolbar-side-icon class="hidden-md-and-up" @click="sideNav = !sideNav"></v-toolbar-side-icon>
+            <v-toolbar-items class="hidden-sm-and-down">
+                <v-btn v-for="item in menuItems" :key="item.title" flat :href="item.href">
+                    <v-icon left>{{ item.icon }}</v-icon>{{ item.title }}
+                </v-btn>
+                <v-btn @click="goToGithub()" flat>
+                    <a id="nav-github-btn" style="text-decoration:none; color:white" href="https://github.com/gabrielfreire" target="_blank"><i class="fab fa-github-square"></i> github.com/gabrielfreire</a>
+                </v-btn>
+                <v-btn flat>
+                    <a id="nav-github-btn" style="text-decoration:none; color:white" href="/about"><v-icon left>receipt</v-icon>My CV</a>
+                </v-btn>
+            </v-toolbar-items>
+            <v-spacer></v-spacer>
+            <v-menu transition="slide-x-transition" offset-y>
+                <v-toolbar-title slot="activator">
+                    <span><v-icon left ligth>arrow_drop_down</v-icon>Projects</span>
+                </v-toolbar-title>
+                <v-list light>
+                    <v-list-tile>
+                        <v-list-tile-title><a style="text-decoration:none; color:black" href="https://xclientapp.herokuapp.com" target="_blank">XClient <small style="color:gray">Heroku app</small></a></v-list-tile-title>
+                    </v-list-tile>
+                    <v-list-tile>
+                        <v-list-tile-title><a style="text-decoration:none; color:black" href="https://videotour.herokuapp.com" target="_blank">Video Tour <small style="color:gray">Heroku app</small></a></v-list-tile-title>
+                    </v-list-tile>
+                    <v-list-tile>
+                        <v-list-tile-title><a style="text-decoration:none; color:black" href="https://barganhodev.herokuapp.com" target="_blank">Barganho Backoffice <small style="color:gray">Heroku app</small></a></v-list-tile-title>
+                    </v-list-tile>
+                    <v-list-tile>
+                        <v-list-tile-title><a style="text-decoration:none; color:black" href="https://karmaforgods.herokuapp.com" target="_blank">Karma Docs <small style="color:gray">Heroku app</small></a></v-list-tile-title>
+                    </v-list-tile>
+                    <v-list-tile>
+                        <v-list-tile-title><a style="text-decoration:none; color:black" href="https://github.com/gabrielfreire/neuralnet.js" target="_blank">neuralnet.js <small style="color:gray">AI JS Library</small></a></v-list-tile-title>
+                    </v-list-tile>
+                    <v-list-tile>
+                        <v-list-tile-title><a style="text-decoration:none; color:black" href="https://github.com/gabrielfreire/Sentry" target="_blank">Sentry <small style="color:gray">Angular2/Spring web app</small></a></v-list-tile-title>
+                    </v-list-tile>
+                </v-list>
+            </v-menu>
+            <v-menu transition="slide-x-transition" offset-y>
+                <v-toolbar-title slot="activator">
+                    <span><v-icon left ligth>arrow_drop_down</v-icon>Social</span>
+
+                </v-toolbar-title>
+                <v-list light>
+                    <v-list-tile>
+                        <v-list-tile-title><a style="text-decoration:none; color:black" href="https://br.linkedin.com/in/gabriel-freire-20929024" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a></v-list-tile-title>
+                    </v-list-tile>
+                    <v-list-tile>
+                        <v-list-tile-title><a style="text-decoration:none; color:black" href="https://github.com/gabrielfreire" target="_blank"><i class="fab fa-github-square"></i> Github</a></v-list-tile-title>
+                    </v-list-tile>
+                    <v-list-tile>
+                        <v-list-tile-title><a style="text-decoration:none; color:black" href="https://www.facebook.com/gabrielfreiredev" target="_blank"><i class="fab fa-facebook-square"></i> Facebook</a></v-list-tile-title>
+                    </v-list-tile>
+                </v-list>
+            </v-menu>
+            <v-toolbar-items class="hidden-sm-and-down">
+                <!--<v-btn flat>Social</v-btn>-->
+            </v-toolbar-items>
+        </v-toolbar>
+        <!--   <nav class="navbar navbar-default navbar-fixed-top">-->
+        <!--  <div class="container">-->
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <!--    <div class="navbar-header">-->
+        <!--      <button type="button" class="navbar-toggle collapsed " data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">-->
+        <!--        <span class="sr-only">Toggle navigation</span>-->
+        <!--        <span class="icon-bar"></span>-->
+        <!--        <span class="icon-bar"></span>-->
+        <!--        <span class="icon-bar"></span>-->
+        <!--      </button>-->
+        <!--      <a class="navbar-brand" href="#home">-->
+        <!--      		<img alt="Gabriel Freire Portfolio" class="img-responsive" id="brand" src="/images/logo4-mini.png">-->
+        <!--      </a>-->
+        <!--    </div>-->
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!--    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">-->
+        <!--      <ul class="nav navbar-nav">-->
+        <!--        <li id="home2"><a class="grayFonts" href="#home">Home</a></li>-->
+        <!--        <li id="portfolio"><a class="grayFonts" href="#work">Services</a></li>-->
+        <!--        <li id="portfolio"><a class="grayFonts" href="#aboutsection">About</a></li>-->
+        <!--        <li id="portfolio"><a class="grayFonts" href="#contactSection">Contact</a></li>-->
+        <!--      </ul>-->
+        <!--      <ul class="nav navbar-nav navbar-right">-->
+        <!--      	<li class="navbar-text" id="centerText">Projects: </li>-->
+        <!--      	<li id="xclient"><a class="grayFonts" href="https://xclientapp.herokuapp.com" target="_blank">XClient</a></li>-->
+        <!--      	<li class="navbar-text" id="centerText">Social: </li>-->
+        <!--        <li><a class="grayFonts" href="https://www.facebook.com/gabrielfreiredev" target="_blank"><i class="fa fa-facebook-square"></i></a></li>-->
+        <!--        <li><a class="grayFonts" href="https://br.linkedin.com/in/gabriel-freire-20929024" target="_blank"><i class="fa fa-linkedin-square"></i></a></li>-->
+        <!--        <li><a class="grayFonts" href="https://github.com/gabrielfreire" target="_blank"><i class="fa fa-github-square"></i></a></li>-->
+        <!--      </ul>-->
+        <!--    </div><!-- /.navbar-collapse -->
+        <!--   </div><!-- /.container -->
+        <!--</nav>-->
+        <!--<div class="container-fluid">-->
+    <div class="row">
+
+        <div class="bg">
+            <div class="darklayer">
+                <section class="aboutMe" id="home">
+                    <div class="container">
+                        <div class="animation">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="contentContainer">
+                                        <div class="aboutmecontent">
+                                            <h1 class="about">Gabriel Freire</h1>
+                                            <hr>
+                                            <h2 style="color:white;">
+                                                &lt;programmer&gt;
+                                            </h2>
+                                            <h2 style="color:white;">Software Engineer</h2>
+                                            <h2 style='color:#99f39c;'><i class="fas fa-map-pin"></i> Dublin</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+
+        <section class="aiSec" id="aisection">
+            <div class="container">
+                <h1 class="aiTitle" id="aiTitle">AI Experiments</h1>
+                <div class="row">
+                    <h2 class="text-center">Comming soon...</h2>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4 class="text-left">
+                                    <i class="fas fa-skull-crossbones"></i>
+                                    Toxicity meter 
+                                    <br>
+                                    <small>Implemented using Pytorch</small>
+                                    <br>
+                                    <small>Trained on the toxic comment Kaggle dataset</small>
+                                </h4>
+                                
+                                <textarea rows="4" id="toxic-inp" class="control-label block" type="text" placeholder="Type your comment/post"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button id="toxic-btn" @click="toxicAnalysis()" class="btn btn-success"><i class="fas fa-brain"></i> Analyse</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span id="toxic-result" class='toxic-result-hidden'></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <p class="text-center">Coming soon...</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <p class="text-center">Coming soon...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="aboutSec" id="aboutsection">
+            <div class="container">
+                <h1 class="sectionTitle" id="aboutTitle">A little about me...</h1>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        <img class="img-responsive mr-5" srcset="/assets/images/gabriel2.jpg" alt="Picture of Gabriel Freire working">
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        <h5 id="aboutSectionContent">
+                            I'm Gabriel Freire, a 27 years old Web Developer born in Recife, Brazil and currently based in Dublin, Ireland. Experienced as a front-end Developer in technologies such as: 
+                            <p class='ui teal big tag label'>HTML5</p>, 
+                            <p class='ui teal big tag label'>CSS3</p>, 
+                            <p class='ui teal big tag label'>Javascript</p>/
+                            <p class='ui teal big tag label'>AngularJS/2</p>, 
+                            <p class='ui teal big tag label'>Vue JS</p> and 
+                            <p class='ui teal big tag label'>React JS</p>. At my Works section you will find other projects including some full-stack projects using 
+                            <p class='ui red big tag label'>MongoDB</p>, 
+                            <p class='ui red big tag label'>Node.js</p>, 
+                            <p class='ui red big tag label'>Express</p>, 
+                            <p class='ui red big tag label'>The Java Spring Framework</p> and 
+                            <p class='ui red big tag label'>MySQL</p>. I love web development and all that comes with it. Love solving problems and i am always coding or working-out at the gym/playing guitar/gaming in my spare time. Say Hi.
+                        </h5>
+                        <v-btn dark id="translate">Traduzir para o Português</v-btn>
+                        <v-btn dark href="/about"><strong>Read more...</strong></v-btn>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="worksSec" id="work">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <h1 class="sectionTitle2">Portfolio</h1>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <v-layout align-center row wrap>
+                    
+                        <v-flex xs12 sm6 md4 lg4 x4>
+                            <v-card class="ma-3" light>
+                                <v-card-media height="200px">
+                                    <img class="img-responsive" src="/assets/images/main.jpg" :alt="work.title">
+                                </v-card-media>
+                                <v-card-title primary-title>
+                                    <div>
+                                        <h3 class="headline mb-0">
+                                            Gabriel&#39;s Portofolio
+                                        </h3>
+                                        <div style="color:black">
+                                            The first project of my portfolio, my own Website. I made this website as a sample of my skills and ...
+                                        </div>
+                                    </div>
+                                </v-card-title>
+                                <v-card-actions>
+                                    <v-btn flat block class="blue--text" href="/works/57100c618424a81d0e210176">Learn more</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-flex>
+                        
+                        <v-flex xs12 sm6 md4 lg4 x4>
+                            <v-card class="ma-3" light>
+                                <v-card-media height="200px">
+                                    <img class="img-responsive" src="/assets/images/game.jpg" :alt="work.title">
+                                </v-card-media>
+                                <v-card-title primary-title>
+                                    <div>
+                                        <h3 class="headline mb-0">
+                                            RGB Color Game
+                                        </h3>
+                                        <div style="color:black">
+                                            This is a really simple but fun game i made while i was learning HTML5, CSS3 and Javascript. It was ...
+                                        </div>
+                                    </div>
+                                </v-card-title>
+                                <v-card-actions>
+                                    <v-btn flat block class="blue--text" href="/works/571965d235f27c1100042516">Learn more</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-flex>
+                        
+                        <v-flex xs12 sm6 md4 lg4 x4>
+                            <v-card class="ma-3" light>
+                                <v-card-media height="200px">
+                                    <img class="img-responsive" src="/assets/images/xclient.png" :alt="work.title">
+                                </v-card-media>
+                                <v-card-title primary-title>
+                                    <div>
+                                        <h3 class="headline mb-0">
+                                            XClient - App [In Progress]
+                                        </h3>
+                                        <div style="color:black">
+                                            This is a Inventory Management system that i am developing for the Web platform. I am learning a lot...
+                                        </div>
+                                    </div>
+                                </v-card-title>
+                                <v-card-actions>
+                                    <v-btn flat block class="blue--text" href="/works/5744731e7855281100a4faeb">Learn more</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-flex>
+                        
+                        <v-flex xs12 sm6 md4 lg4 x4>
+                            <v-card class="ma-3" light>
+                                <v-card-media height="200px">
+                                    <img class="img-responsive" src="/assets/images/karma1.jpeg" :alt="work.title">
+                                </v-card-media>
+                                <v-card-title primary-title>
+                                    <div>
+                                        <h3 class="headline mb-0">
+                                            Karma Guide App
+                                        </h3>
+                                        <div style="color:black">
+                                            <p>A quick guide to karma testing for Angular JS web applications (Developed with Angular 2 + Spring...
+                                        </div>
+                                    </div>
+                                </v-card-title>
+                                <v-card-actions>
+                                    <v-btn flat block class="blue--text" href="/works/58ebbffe992441001178d4a1">Learn more</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-flex>
+                        
+                        <v-flex xs12 sm6 md4 lg4 x4>
+                            <v-card class="ma-3" light>
+                                <v-card-media height="200px">
+                                    <img class="img-responsive" src="/assets/images/videotour1.jpeg" :alt="work.title">
+                                </v-card-media>
+                                <v-card-title primary-title>
+                                    <div>
+                                        <h3 class="headline mb-0">
+                                            Play in Destiny
+                                        </h3>
+                                        <div style="color:black">
+                                            <p>A video web application for a tourism company integrated with Youtube to manage the company’s You...
+                                        </div>
+                                    </div>
+                                </v-card-title>
+                                <v-card-actions>
+                                    <v-btn flat block class="blue--text" href="/works/58ebbe91992441001178d4a0">Learn more</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-flex>
+                        
+                        <v-flex xs12 sm6 md4 lg4 x4>
+                            <v-card class="ma-3" light>
+                                <v-card-media height="200px">
+                                    <img class="img-responsive" src="/assets/images/barganho3.jpeg" :alt="work.title">
+                                </v-card-media>
+                                <v-card-title primary-title>
+                                    <div>
+                                        <h3 class="headline mb-0">
+                                            Barganho Backoffice
+                                        </h3>
+                                        <div style="color:black">
+                                            <p>Back office application for an Android Mobile App in which I built a <strong>REST API</strong> in...
+                                        </div>
+                                    </div>
+                                </v-card-title>
+                                <v-card-actions>
+                                    <v-btn flat block class="blue--text" href="/works/58ecfde46958780011673746">Learn more</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-flex>
+                        
+                </v-layout>
+                <!--</div>-->
+            </div>
+        </section>
+
+        <section class="contactSec" id="contactSection">
+            <v-container>
+                <v-layout align-center justify-center row wrap>
+                    <v-flex xs12 sm12 md6 lg6 xl6>
+                        <form action="/send" method="POST">
+                            <v-card>
+                                <!-- <img class="img-responsive center" src="/images/logo_contact.png" alt="Image with contact information and a picture of Gabriel Freire in front of the logo background"> -->
+                                <v-card-title>
+                                    <div class="headline">
+                                        <v-icon left>rate_review</v-icon> Contact me</div>
+                                </v-card-title>
+                                <v-card-text>
+                                    <v-text-field label="Name" dark v-model="email.name"></v-text-field>
+                                    <v-text-field label="Your e-mail" dark v-model="email.email"></v-text-field>
+                                    <v-text-field label="Subject" dark v-model="email.subject"></v-text-field>
+                                    <v-text-field label="Message" dark multi-line v-model="email.message"></v-text-field>
+                                </v-card-text>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn flat @click="sendEmail()">Send
+                                        <v-icon right>send</v-icon>
+                                    </v-btn>
+                                </v-card-actions>
+                                <v-alert v-if="message" success value="true" dismissible transition="fade-transition">
+                                    {{message}}
+                                </v-alert>
+                            </v-card>
+                        </form>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+        </section>
+
+        <!-- Footer -->
+        <section class="footerSec">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="innerCont">
+                            <p>Contact information:</p>
+                            <p>+353 83 8871153</p>
+                            <p>gabrielfreiredev@gmail.com</p>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6">
+                                    <a href="https://www.facebook.com/gabriel.freire.7330"><i class="fab fa-facebook-square"></i></p>
+							</div>
+							<div class="col-xs-12 col-sm-6">
+								<a href="https://br.linkedin.com/in/gabriel-freire-20929024"><i class="fab fa-linkedin"></i>></p>
+							</div>
+						</div>
+						
+					
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</section>
+
+
+</div>
+</v-app>
+<script type="text/javascript" src="/javascripts/lib/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/javascripts/lib/vue.min.js"></script>
+<script type="text/javascript" src="/javascripts/lib/vuetify.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="/javascripts/scroll.js"></script>
+<script type="text/javascript" src="/javascripts/main.js"></script>
+<script type="text/javascript" src="/javascripts/lib/bootstrap.min.js"></script>
+<script type="text/javascript" src="/javascripts/lib/smoothscroll.js"></script>
+</body>
+
+</html>

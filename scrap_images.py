@@ -28,7 +28,8 @@ def save_to_folder():
                 try:                
                     print(" ------------------ ")
                     print(f"Saving {im}...")
-                    pil_image = Image.open(requests.get(im, stream=True).raw).convert('RGB')
+                    raw_picture = requests.get(im, stream=True).raw
+                    pil_image = Image.open(raw_picture).convert('RGB')
                     pil_image.save(f"{folder_name}/img_{count}.jpeg")
                     count += 1
                     print(" ------------------ ")

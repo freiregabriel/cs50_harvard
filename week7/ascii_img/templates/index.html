@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    <div class="col">
+        <form action="/makeascii" enctype="multipart/form-data" method="post">
+
+            <!-- TODO -->
+            <div class="form-group">
+                <label class="label-control">Select an image</label>
+                <input class="form-control" type="file" name="image">
+            </div>
+            <input class="btn btn-large btn-success" type="submit" value="Convert">
+
+        </form>
+    </div>
+
+{% endblock %}

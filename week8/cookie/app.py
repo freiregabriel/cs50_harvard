@@ -6,7 +6,6 @@ db = SQL('sqlite:///app.db')
 
 # Reload templates when they are changed
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-app.config["MEMORIOUS_DEBUG"] = True
 # Create session
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"

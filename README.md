@@ -166,7 +166,7 @@ Content-Type: text/html
 
 #### redirect
 - `301` (Moved permanentely): page is now at a new location, automatic redirects built in to most browsers. 
-- `302` (Found): page is now at a new location temporarily
+- `302` (Found, redirect): page is now at a new location temporarily
 #### client error
 - `401` (uniauthorized)
 - `403` (forbidden)
@@ -259,3 +259,126 @@ To execute python like `c`
 #!/usr/bin/env python3
 ```
 2. change permissions on your file `chmod a+x <file>`
+
+# Cookies
+
+A cookie is a file to save your information in the browser that is created and sent by websites so you don't have to login everytime for example, 
+if a cookie is well implemented it will only save a big random number to a File, not the raw information so your
+information is hidden.
+
+a cookie is set in the Header
+```
+send
+header {
+    "Set-Cookie": session=value
+}
+```
+```
+will receive
+header {
+    "Cookie": session=value
+}
+```
+
+to make cookie session on Flask
+```python
+from flask import Flask, session
+
+app = Flask(__name__)
+
+# Reload templates when they are changed
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+# Create session
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+```
+
+# SQL Database
+A set of tables with rows and columns to store data in a hierarchycaclly organized way
+### Data types
+- BLOB
+- INTEGER: 
+     - tinyint 
+     - smallint 
+     - mediumint 
+     - integer - 32 bits
+     - bigint - 64 bits avoid because of memory usage (use only when needed)
+- NUMERIC
+    - boolean
+    - date
+    - datetime
+    - numeric(scale,precision)
+    - time
+    - timestamp
+    - FLOAT
+    - DECIMAL
+    - BIT
+- REAL
+- ENUM
+- GEOMETRY
+- TEXT
+    - char(n) - fixed size i.e. char(8) stores text with 8 characteres
+    - varchar(n) - variable size to a fixed limit N
+    - text - no limit, give me a big chunk of memory
+
+command to create a database in sqlite3
+
+`sqlite3 app.db`
+
+SQLite is a lightweight database program that stores your data into a `file` `name.db`. Other database programs like `PostgreSQL`, `MySQL` and `Oracle` will run and store it in `RAM memory`, which is faster 
+
+### create table
+usually with support of a client GUI
+`CREATE TABLE 'registrants' ('id' integer, 'name' varchar(255), 'dorm' varchar(255));`
+### show tables
+`SHOW TABLES` 
+### delete table
+`DROP TABLE 'registrants'`
+### delete database
+`DROP DATABASE`
+### insert Data
+```sql
+INSERT INTO <table> (<columns>) VALUES (<values>)
+```
+`INSERT INTO registrants (id, name, dorm) VALUES(1, 'Brian', 'Pennypacker');`
+`INSERT INTO registrants (id, name, dorm) VALUES(2, 'David', 'Matthews');`
+### Alter table
+`ALTER TABLE customers ADD COLUMN id INT AUTO_INCREMENT PRIMARY KEY`
+### Select data
+`SELECT * FROM registrants;`
+#### fitler data
+`SELECT * FROM registrants WHERE dorm ='Matthews';`
+`SELECT name FROM registrants WHERE dorm ='Matthews';`
+`SELECT name FROM registrants WHERE dorm ='Matthews' ORDER BY id;`
+`SELECT password FROM users WHERE id < 12`
+#### Update data
+`UPDATE registrants dorm ='Canaday' WHERE id=1 SET;`
+#### Delete data
+`DELETE FROM registrants WHERE id=1;`
+
+#### creation of a more complex table
+`CREATE TABLE 'registrants' ('id' integer PRIMARY KEY AUTOINCREMENT NOT NULL, 'name' varchar(255) NOT NULL, 'dorm' varchar(255), 'phone' char(10), 'email' varchar(255), 'birthdate' date, 'sports' varchar(1024))`
+
+#### More complex select from two tables
+- `SELECT * FROM {TABLE1} JOIN {TABLE2} ON {DATA1} = {DATA2}`
+- `SELECT * FROM Artist, Album WHERE Artist.artistId = Album.artistId`
+- `SELECT * FROM Artist JOIN Album ON Artist.artistId = Album.artistId`
+- ```sql
+    SELECT users.name, moms.mother FROM 
+    users JOIN moms 
+    ON users.username = moms.username
+    ```
+
+#### Index
+##### no index
+`SELECT * FROM Album WHERE title LIKE '%Rock'` - characters before
+`SELECT * FROM Album WHERE title LIKE 'Rock%'` - characters after
+#### Functions
+```
+AVG
+MIN
+MAX
+COUNT
+SUM
+...
+```

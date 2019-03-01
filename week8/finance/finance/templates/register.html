@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <form action="/register" method="post">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
+            <br>
+            <small id="error-msg" style="visibility: hidden">This username is taken</small>
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="password" placeholder="Password" type="password">
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="password_again" placeholder="Password(again)" type="password">
+        </div>
+        <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+    <script>
+        let form = document.querySelector('form')
+        let username_inp = document.querySelector('input[name="username"]');
+        let error_msg = document.querySelector('#error-msg');
+        let valid = false;
+        username_inp.onchange = function (e) {
+            var http = new XMLHttpRequest();
+            http.onreadystatechange = () => {
+                if (http.readyState == 4 && http.status == 200) {
+                    let data = JSON.parse(http.responseText);
+                    if (data.available) {
+                        error_msg.style.visibility = 'hidden';
+                        username_inp.style.borderColor = '#ced4da';
+                        valid = true;
+                    }else {
+                        error_msg.style.visibility = 'visible';
+                        username_inp.style.borderColor = 'red';
+                        valid = false;
+                    }
+                }
+            }
+            http.open('GET', '/check?username=' + username_inp.value);
+            http.send()
+        }
+        form.onsubmit = () => {
+            if (!username_inp.value) {
+                alert ("No username or password!");
+                return false;
+            }
+            if (!valid) {
+                alert ("Username already taken!");
+                return false;
+            }
+            return true;
+        }
+    </script>
+{% endblock %}

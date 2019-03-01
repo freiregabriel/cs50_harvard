@@ -352,7 +352,7 @@ INSERT INTO <table> (<columns>) VALUES (<values>)
 `SELECT name FROM registrants WHERE dorm ='Matthews' ORDER BY id;`
 `SELECT password FROM users WHERE id < 12`
 #### Update data
-`UPDATE registrants dorm ='Canaday' WHERE id=1 SET;`
+`UPDATE registrants SET dorm ='Canaday' WHERE id=1;`
 #### Delete data
 `DELETE FROM registrants WHERE id=1;`
 

@@ -45,3 +45,6 @@ main img
     /* constrain images on small screens */
     max-width: 100%;
 }
+#error-msg {
+    color: red;
+}

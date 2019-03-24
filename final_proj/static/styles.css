@@ -1,0 +1,554 @@
+/**
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+body {
+    margin: 0;
+}
+
+
+/* Disable ugly boxes around images in IE10 */
+
+a img {
+    border: 0px;
+}
+
+ ::-moz-selection {
+    background-color: #6ab344;
+    color: #fff;
+}
+
+ ::selection {
+    background-color: #6ab344;
+    color: #fff;
+}
+
+.utils-search-box .mdl-textfield__input {
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.utils-header .mdl-menu__container {
+    z-index: 50;
+    margin: 0 !important;
+}
+
+.mdl-textfield--expandable {
+    width: auto;
+}
+
+.utils-fab {
+    position: absolute;
+    right: 20%;
+    bottom: -26px;
+    z-index: 3;
+    background: #64ffda !important;
+    color: black !important;
+}
+
+.utils-mobile-title {
+    display: none !important;
+}
+
+.utils-logo-image {
+    height: 28px;
+    width: 140px;
+}
+
+.utils-header {
+    overflow: visible;
+    background-color: white;
+    color: gray;
+}
+
+.utils-header .material-icons {
+    color: #767777 !important;
+}
+
+.utils-header .mdl-layout__drawer-button {
+    background: transparent;
+    color: #767777;
+}
+
+.utils-header .mdl-navigation__link {
+    color: #757575;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+li.utils-menu-item.mdl-menu__item a {
+    color: black;
+    text-decoration: none;
+}
+
+li.utils-menu-item.mdl-menu__item a:hover {
+    text-decoration: none;
+}
+
+.utils-content {
+    background: #efefef;
+}
+
+.utils-btn-cont {
+    display: block;
+    margin: 10px auto;
+}
+
+.utils-navigation-container {
+    /* Simple hack to make the overflow happen to the left instead... */
+    direction: rtl;
+    -webkit-order: 1;
+    -ms-flex-order: 1;
+    order: 1;
+    width: 100px;
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.utils-navigation {
+    /* ... and now make sure the content is actually LTR */
+    direction: ltr;
+    -webkit-justify-content: flex-end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    width: 100px;
+}
+
+.utils-navigation span {
+    color: gray;
+    font-size: 12px;
+    font-weight: 100;
+    font-family: monospace;
+    white-space: nowrap;
+}
+
+.utils-search-box.is-focused+.utils-navigation-container {
+    opacity: 0;
+    width: 100px;
+}
+
+.utils-navigation .mdl-navigation__link {
+    display: inline-block;
+    height: auto;
+    line-height: 60px;
+    background-color: transparent !important;
+    border-bottom: 4px solid transparent;
+}
+
+.utils-navigation .mdl-navigation__link:hover {
+    border-bottom: 4px solid #8bc34a;
+}
+
+.utils-search-box {
+    -webkit-order: 2;
+    -ms-flex-order: 2;
+    order: 2;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.utils-more-button {
+    -webkit-order: 3;
+    -ms-flex-order: 3;
+    order: 3;
+}
+
+.utils-drawer {
+    border-right: none;
+}
+
+.utils-drawer-separator {
+    height: 1px;
+    background-color: #dcdcdc;
+    margin: 8px 0;
+}
+
+.utils-drawer .mdl-navigation__link.mdl-navigation__link {
+    font-size: 14px;
+    color: #757575;
+}
+
+.utils-drawer span.mdl-navigation__link.mdl-navigation__link {
+    color: #8bc34a;
+}
+
+.utils-drawer .mdl-layout-title {
+    position: relative;
+    background: #6ab344;
+    height: 160px;
+}
+
+.utils-drawer .utils-logo-image {
+    position: absolute;
+    bottom: 16px;
+}
+
+.utils-be-together-section {
+    position: relative;
+    height: 800px;
+    width: auto;
+    background-color: #f3f3f3;
+    background: url('images/slide01.jpg') center 30% no-repeat;
+    background-size: cover;
+}
+
+.logo-font {
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    line-height: 1;
+    color: #767777;
+    font-weight: 500;
+}
+
+.utils-slogan {
+    font-size: 60px;
+    padding-top: 160px;
+}
+
+.utils-sub-slogan {
+    font-size: 21px;
+    padding-top: 24px;
+}
+
+.utils-create-character {
+    font-size: 21px;
+    padding-top: 400px;
+}
+
+.utils-create-character a {
+    text-decoration: none;
+    color: #767777;
+    font-weight: 300;
+}
+
+.utils-screen-section {
+    position: relative;
+    padding-top: 60px;
+    padding-bottom: 80px;
+}
+
+.utils-screens {
+    text-align: right;
+    width: 100%;
+    white-space: nowrap;
+    overflow-x: auto;
+}
+
+.utils-screen {
+    text-align: center;
+}
+
+.utils-screen .utils-link {
+    margin-top: 16px;
+    display: block;
+    z-index: 2;
+}
+
+.utils-image-link {
+    text-decoration: none;
+}
+
+.utils-wear {
+    display: inline-block;
+    width: 160px;
+    margin-right: 32px;
+}
+
+.utils-wear .utils-screen-image {
+    width: 40%;
+    z-index: 1;
+}
+
+.utils-phone {
+    display: inline-block;
+    width: 64px;
+    margin-right: 48px;
+}
+
+.utils-phone .utils-screen-image {
+    width: 100%;
+    z-index: 1;
+}
+
+.utils-tablet {
+    display: inline-block;
+    width: 110px;
+    margin-right: 64px;
+}
+
+.utils-tablet .utils-screen-image {
+    width: 100%;
+    z-index: 1;
+}
+
+.utils-tablet .utils-link {
+    display: block;
+    z-index: 2;
+}
+
+.utils-tv {
+    display: inline-block;
+    width: 300px;
+    margin-right: 80px;
+}
+
+.utils-tv .utils-screen-image {
+    width: 100%;
+    z-index: 1;
+}
+
+.utils-auto {
+    display: inline-block;
+    width: 300px;
+    overflow: hidden;
+}
+
+.utils-auto .utils-screen-image {
+    display: block;
+    height: 300px;
+    z-index: 1;
+}
+
+.utils-wear-section {
+    position: relative;
+    background: url('images/wear.png') center top no-repeat;
+    background-size: cover;
+    height: 800px;
+}
+
+.utils-wear-band {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background-color: #37474f;
+}
+
+.utils-wear-band-text {
+    max-width: 800px;
+    margin-left: 25%;
+    padding: 24px;
+    text-align: left;
+    color: white;
+}
+
+.utils-wear-band-text p {
+    padding-top: 8px;
+}
+
+.utils-link {
+    text-decoration: none;
+    color: #8bc34a !important;
+}
+
+.utils-link:hover {
+    color: #7cb342 !important;
+}
+
+.utils-link .material-icons {
+    position: relative;
+    top: -1px;
+    vertical-align: middle;
+}
+
+.utils-alt-link {
+    text-decoration: none;
+    color: #64ffda !important;
+    font-size: 16px;
+}
+
+.utils-alt-link:hover {
+    color: #00bfa5 !important;
+}
+
+.utils-alt-link .material-icons {
+    position: relative;
+    top: 6px;
+}
+
+.utils-customized-section {
+    text-align: center;
+}
+
+.utils-customized-section-text {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 80px 16px 0 16px;
+}
+
+.utils-customized-section-text p {
+    padding-top: 16px;
+}
+
+.utils-customized-section-image {
+    background: url('images/devices.jpg') center top no-repeat;
+    background-size: cover;
+    height: 400px;
+}
+
+.utils-more-section {
+    padding: 80px 0;
+    max-width: 1044px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.utils-more-section .utils-section-title {
+    margin-left: 12px;
+    padding-bottom: 24px;
+}
+
+.utils-card-container {}
+
+.utils-card-container .mdl-card__media {
+    overflow: hidden;
+    background: transparent;
+}
+
+.utils-card-container .mdl-card__media img {
+    width: 100%;
+}
+
+.utils-card-container .mdl-card__title {
+    background: transparent;
+    height: auto;
+}
+
+.utils-card-container .mdl-card__title-text {
+    color: black;
+    height: auto;
+}
+
+.utils-card-container .mdl-card__supporting-text {
+    height: auto;
+    color: black;
+    padding-bottom: 56px;
+}
+
+.utils-card-container .mdl-card__actions {
+    position: absolute;
+    bottom: 0;
+}
+
+.utils-card-container .mdl-card__actions a {
+    border-top: none;
+    font-size: 16px;
+}
+
+.utils-footer {
+    background-color: #fafafa;
+    position: relative;
+}
+
+.utils-footer a:hover {
+    color: #8bc34a;
+}
+
+.utils-footer .mdl-mega-footer--top-section::after {
+    border-bottom: none;
+}
+
+.utils-footer .mdl-mega-footer--middle-section::after {
+    border-bottom: none;
+}
+
+.utils-footer .mdl-mega-footer--bottom-section {
+    position: relative;
+}
+
+.utils-footer .mdl-mega-footer--bottom-section a {
+    margin-right: 2em;
+}
+
+.utils-footer .mdl-mega-footer--right-section a .material-icons {
+    position: relative;
+    top: 6px;
+}
+
+.utils-link-menu:hover {
+    cursor: pointer;
+}
+
+
+/* pokemon layout */
+
+.card .card-content h5 {}
+
+strong {
+    font-weight: 700;
+}
+
+
+/**** Mobile layout ****/
+
+@media (max-width: 900px) {
+    .utils-navigation-container {
+        display: none;
+    }
+    .utils-title {
+        display: none !important;
+    }
+    .utils-mobile-title {
+        display: block !important;
+        position: absolute;
+        left: calc(50% - 70px);
+        top: 12px;
+        transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    /* WebViews in iOS 9 break the "~" operator, and WebViews in OS X 10.10 break
+       consecutive "+" operators in some cases. Therefore, we need to use both
+       here to cover all the bases. */
+    .utils.utils-search-box.is-focused~.utils-mobile-title,
+    .utils-search-box.is-focused+.utils-navigation-container+.utils-mobile-title {
+        opacity: 0;
+    }
+    .utils-more-button {
+        display: none;
+    }
+    .utils-search-box.is-focused {
+        width: calc(100% - 48px);
+    }
+    .utils-search-box .mdl-textfield__expandable-holder {
+        width: 100%;
+    }
+    .utils-be-together-section {
+        height: 350px;
+    }
+    .utils-slogan {
+        font-size: 26px;
+        margin: 0 16px;
+        padding-top: 24px;
+    }
+    .utils-sub-slogan {
+        font-size: 16px;
+        margin: 0 16px;
+        padding-top: 8px;
+    }
+    .utils-create-character {
+        padding-top: 200px;
+        font-size: 16px;
+    }
+    .utils-create-character img {
+        height: 12px;
+    }
+    .utils-fab {
+        display: none;
+    }
+    .utils-wear-band-text {
+        margin-left: 0;
+        padding: 16px;
+    }
+    .utils-footer .mdl-mega-footer--bottom-section {
+        display: none;
+    }
+}

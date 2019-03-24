@@ -1,0 +1,20 @@
+<!-- https://aws.random.cat/meow -->
+<!-- https://dog.ceo/api/breeds/image/random -->
+{% extends "layout.html" %} {% block main %}
+<div class="utils-content mdl-layout__content">
+    <div class="utils-be-together-section mdl-typography--text-center">
+        <div class="logo-font utils-slogan">Best of Chuck Norris</div>
+        <img height='100' id="icon_img_placeholder" src="">
+        <div class="container">
+            <blockquote id='quote'></blockquote>
+            <div class="utils-btn-cont">
+                <button id="chuck_generate_btn" class="btn-large waves-effect waves-yellow">Generate</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="/static/chuck.js"></script>
+{% endblock %}

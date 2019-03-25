@@ -1,0 +1,20 @@
+<!-- https://aws.random.cat/meow -->
+<!-- https://dog.ceo/api/breeds/image/random -->
+{% extends "layout.html" %} {% block main %}
+<div class="utils-content mdl-layout__content">
+    <div class="utils-be-together-section mdl-typography--text-center">
+        <div class="logo-font utils-slogan">Get a random cat image</div>
+        <img height='400' id="cat_img_placeholder" src="">
+        <div class="container">
+
+            <div class="utils-btn-cont">
+                <button id="cat_fetch_btn" class="btn-large waves-effect waves-yellow">Fetch Cat</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="/static/cat.js"></script>
+{% endblock %}

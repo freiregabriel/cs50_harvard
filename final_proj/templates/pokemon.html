@@ -1,0 +1,41 @@
+<!-- https://aws.random.cat/meow -->
+<!-- https://dog.ceo/api/breeds/image/random -->
+{% extends "layout.html" %} {% block main %}
+<div class="utils-content mdl-layout__content">
+    <div class="utils-be-together-section mdl-typography--text-center">
+        <div class="logo-font utils-slogan">PokeDex</div>
+        <div class="container">
+
+            <div class="utils-btn-cont">
+                <div class="input-field col s6">
+                    <input id="pokemon_input" type="text" class="validate">
+                    <label for="pokemon_input">Pokemon Name</label>
+                </div>
+                <button id="pokemon_fetch_btn" class="btn-large waves-effect waves-yellow">Find Pokemon</button>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <div id="sprites_placeholder" class="row">
+                        <!-- Sprites here -->
+                    </div>
+                </div>
+                <div class="card-tabs">
+                    <ul class="tabs tabs-fixed-width">
+                        <li class="tab"><a class="active" href="#name_sec">Info</a></li>
+                        <li class="tab"><a href="#ability_sec">Abilities</a></li>
+                    </ul>
+                </div>
+                <div class="card-content grey lighten-4">
+                    <div id="name_sec">Information will show here</div>
+                    <div id="ability_sec">Abilities will show here</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="/static/pokemon.js"></script>
+{% endblock %}

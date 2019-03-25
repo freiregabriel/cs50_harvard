@@ -1,0 +1,32 @@
+<!-- https://aws.random.cat/meow -->
+<!-- https://dog.ceo/api/breeds/image/random -->
+{% extends "layout.html" %} {% block main %}
+<div class="utils-content mdl-layout__content">
+    <div class="utils-be-together-section mdl-typography--text-center">
+        <div class="logo-font utils-slogan">Get the IP's Country</div>
+        <img height='400' id="cat_img_placeholder" src="">
+        <div class="container">
+
+            <div class="utils-btn-cont">
+                <div class="input-field col s6">
+                    <input id="ip_input" type="text" class="validate">
+                    <label for="ip_input">IP</label>
+                </div>
+                <button id="ip_fetch_btn" class="btn-large waves-effect waves-yellow">Find Country</button>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <div id="ipdata_placeholder" class="row">
+                        <!-- IP Country here -->
+                        Country will show here
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="/static/ip.js"></script>
+{% endblock %}

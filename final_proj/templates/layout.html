@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Introducing Lollipop, a sweet new take on Android.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <!-- documentation at http://getbootstrap.com/docs/4.1/, alternative themes at https://bootswatch.com/ -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- https://favicon.io/emoji-favicons/money-mouth-face/ -->
+    <link href="/static/favicon.ico" rel="icon">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.min.css">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <link href="/static/styles.css" rel="stylesheet">
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/static/utils.js"></script>
+    <script src="/static/config.js"></script>
+    <script src="/static/error.js"></script>
+    <script src="/static/http.js"></script>
+    <!-- https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css
+    https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js -->
+    <title>Utilities Guru</title>
+</head>
+
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <div class="utils-header mdl-layout__header mdl-layout__header--waterfall">
+            <div class="mdl-layout__header-row">
+                <span class="utils-title mdl-layout-title">
+                    <!-- <img class="utils-logo-image" src="images/android-logo.png"> -->
+                    <span>Utilities Application</span>
+                </span>
+                <!-- Add spacer, to align navigation to the right in desktop -->
+                <div class="utils-header-spacer mdl-layout-spacer"></div>
+
+                <!-- Navigation -->
+                <div class="utils-navigation-container">
+                    <div class="utils-navigation mdl-navigation">
+                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/">Home</a>
+                    </div>
+                </div>
+                {% if version %}
+                <div>
+                    <div class="utils-navigation mdl-navigation">
+                        <span>Version: {{ version }}</span>
+                    </div>
+                </div>
+                {% endif %}
+                <button class="utils-more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-button">
+                    <i class="material-icons">more_vert</i>
+                    </button>
+                <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-button">
+                    <li class="utils-menu-item mdl-menu__item"><a href="#">About</a></li>
+                    <li class="utils-menu-item mdl-menu__item"><a href="#">Settings</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="utils-drawer mdl-layout__drawer">
+            <span class="mdl-layout-title">
+                <!-- <img class="utils-logo-image" src="images/android-logo-white.png"> -->
+                <span>Menu</span>
+            </span>
+            <div class="mdl-navigation">
+                <span class="mdl-navigation__link" href="">Random stuff</span>
+                <a class="mdl-navigation__link" href="/dogs">Random Dogs</a>
+                <a class="mdl-navigation__link" href="/cats">Random Cats</a>
+                <a class="mdl-navigation__link" href="/chuck_norris_jokes">Random Chuck Norris</a>
+                <div class="utils-drawer-separator"></div>
+                <span class="mdl-navigation__link" href="">Pokemon</span>
+                <a class="mdl-navigation__link" href="/pokemon_index">PokeDex</a>
+                <div class="utils-drawer-separator"></div>
+                <span class="mdl-navigation__link" href="">Misc</span>
+                <a class="mdl-navigation__link" href="/country_finder_by_ip">Find IP Country</a>
+                <a class="mdl-navigation__link" href="/youtube_video_downloader">Download Youtube Video</a>
+                <a class="mdl-navigation__link" href="/quick_hacker_news">Quick Hacker News</a>
+                <div class="utils-drawer-separator"></div>
+                <span class="mdl-navigation__link" href="">For developers</span>
+                <a class="mdl-navigation__link" href="">App developer resources</a>
+            </div>
+        </div>
+        {% block main %}{% endblock %}
+
+        <footer class="small text-center text-muted">
+            Application developed by <a href="https://github.com/gabrielfreire" target="_blank">Gabriel Freire</a>.
+        </footer>
+    </div>
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+</body>
+
+</html>

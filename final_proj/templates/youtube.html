@@ -1,0 +1,27 @@
+<!-- https://aws.random.cat/meow -->
+<!-- https://dog.ceo/api/breeds/image/random -->
+{% extends "layout.html" %} {% block main %}
+<div class="utils-content mdl-layout__content">
+    <div class="utils-be-together-section mdl-typography--text-center">
+        <div class="logo-font utils-slogan">Download any youtube video</div>
+        <form id='youtube_form' action='/download' method='get'>
+
+            <div class="container">
+
+                <div class="utils-btn-cont">
+                    <div class="input-field col s6">
+                        <input name='url' id="youtube_url_input" type="text" class="validate">
+                        <label for="youtube_url_input">YouTube Video URL e.g. https://www.youtube.com/watch?v=2aZ23xDe138</label>
+                    </div>
+                    <button id="youtube_download_btn" type='submit' class="btn-large waves-effect waves-yellow">Download</button>
+                </div>
+
+
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+<script src="/static/youtube.js"></script>
+{% endblock %}

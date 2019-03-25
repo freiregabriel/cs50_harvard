@@ -4,13 +4,14 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build hello world",
+            "label": "build",
             "type": "shell",
-            "command": "gcc",
+            "command": "g++",
             "args": [
+                "-g",
                 "-o",
-                "week4/trie",
-                "week4/trie.c"
+                "extras/stdy",
+                "extras/stdy.cpp"
             ],
             "group": {
                 "kind": "build",

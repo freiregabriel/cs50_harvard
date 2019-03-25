@@ -22,6 +22,8 @@ $(document).ready(function() {
         }
         // transform pokemon nameto lowercase
         name = name.toLowerCase();
+        
+        M.toast({ html: 'Loading...' });
         // make http request to the server
         http.get(`${pokemon_url}?name=${name}`).then((res) => {
             // validate request

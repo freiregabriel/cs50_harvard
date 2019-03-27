@@ -69,8 +69,11 @@ def hackernews_page() -> Any:
 # REST Apis
 @app.route("/api_hacker_news", methods=['GET'])
 def hackernews_api() -> Any:
-    news = get_formatted_top_news(limit=5)
-    return jsonify(news)
+    try:
+        news = get_formatted_top_news(limit=5)
+        return jsonify(news)
+    except HTTPException as e:
+        raise e
 
 @app.route("/pokemon", methods=["GET"])
 def pokemon() -> Any:
@@ -78,7 +81,7 @@ def pokemon() -> Any:
     try:
         pokemon: Dict[str, Any] = get_pokemon(name)
         return jsonify(pokemon)
-    except Exception as e:
+    except HTTPException as e:
         raise e
 
 @app.route("/quote", methods=["GET"])
@@ -86,7 +89,7 @@ def quote() -> Any:
     try:
         quote = get_quote()
         return jsonify(quote)
-    except Exception as e:
+    except HTTPException as e:
         raise e
 
 @app.route("/chuck", methods=["GET"])
@@ -94,7 +97,7 @@ def chuck_joke() -> Any:
     try:
         quote = get_chuck_joke()
         return jsonify(quote)
-    except Exception as e:
+    except HTTPException as e:
         raise e
 
 @app.route('/download', methods=["GET"])
@@ -104,14 +107,14 @@ def download_by_id() -> Any:
         binary, title = download_video(url)
         return Response(binary, headers={'Content-Disposition': 'attachment; '
                                         'filename=' + f"{title}.mp4"})
-    except Exception as e:
+    except HTTPException as e:
         raise e
 
-def errorhandler(e: Exception) -> Any:
+def errorhandler(e: HTTPException) -> Any:
     """Handle error"""
     if not isinstance(e, HTTPException):
         e = InternalServerError()
-    return apology(e.name, e.code)
+    return jsonify(e.name, e.code)
 
 
 # Listen for errors

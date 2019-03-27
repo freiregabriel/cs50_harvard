@@ -21,7 +21,7 @@ $(document).ready(function() {
         a.target = '_blank';
         a.className = 'collection-item';
         $(a).html(`
-            <strong>${data['type']} (${data['score']})</strong> ${data['title']} - ${data['time']} <small>by ${data['by']}</small>
+            <p><strong>${data['type']} (${data['score']})</strong></p><p>${data['title']} - ${data['time']} <small>by ${data['by']}</small></p>
         `)
         collection_element.appendChild(a);
     }

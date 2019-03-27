@@ -1,0 +1,7 @@
+rule infer
+  command = pytype-single --imports_info $imports --module-name $module -V 3.6 -o $out --no-report-errors --nofail --quick $in
+rule check
+  command = pytype-single --imports_info $imports --module-name $module -V 3.6 -o $out --analyze-annotated --nofail --quick $in
+build C:\Users\gabri\Documents\workspace\cs50_harvard\final_proj\pytype_output\pyi\pokemon.pyi: check C:\Users\gabri\Documents\workspace\cs50_harvard\final_proj\pokemon.py
+  imports = C:\Users\gabri\Documents\workspace\cs50_harvard\final_proj\pytype_output\imports\pokemon.imports
+  module = pokemon

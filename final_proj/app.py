@@ -15,6 +15,8 @@ from .quote import quotes_blueprint
 from .chuck import chuck_blueprint
 from .youtube import youtube_blueprint
 from .hackernews import hackernews_blueprint
+
+# Settings
 from .settings import VERSION
 
 

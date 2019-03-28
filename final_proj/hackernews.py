@@ -1,4 +1,7 @@
+from flask import Blueprint, render_template, jsonify, request
+from .settings import VERSION
 import requests
+from werkzeug.exceptions import HTTPException
 from datetime import datetime
 from .exceptions import InvalidUsage
 from typing import Optional, Any, List, Dict
@@ -54,3 +57,27 @@ def get_formatted_top_news(limit:int=None) -> List[dict]:
                 break
 
     return news_list
+
+# Blueprint
+hackernews_blueprint = Blueprint('hackernews_blueprint', __name__, template_folder='templates')
+
+# Page
+@hackernews_blueprint.route("/quick_hacker_news")
+def hackernews_page() -> Any:
+    """
+    hacker news page
+    """
+    return render_template("hackernews.html", version=VERSION)
+
+# API
+@hackernews_blueprint.route("/api_hacker_news", methods=['GET'])
+def hackernews_api() -> Any:
+    """
+    Load hacker news stories
+    """
+    try:
+        # will return up to 5 news stories
+        news = get_formatted_top_news(limit=5)
+        return jsonify(news)
+    except HTTPException as e:
+        raise e

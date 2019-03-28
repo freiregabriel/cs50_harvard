@@ -23,7 +23,7 @@ $(document).ready(function() {
         a.className = 'collection-item';
         $(a).html(`
             <h5>
-                ${Utils.capitalize(data['type'])} <small>Score:${data['score']}</small>
+                ${data['title']} <small>Score: ${data['score']}</small>
             </h5>
             <p>${data['title']} - ${data['time']} 
                 <br>

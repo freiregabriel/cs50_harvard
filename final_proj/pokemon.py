@@ -1,6 +1,10 @@
+from flask import Blueprint, render_template, jsonify, request
 import requests
 from typing import Any, Optional, List, Dict
+from .settings import VERSION
 from .exceptions import InvalidPokemonNameError, InvalidUsage
+
+# Functionality
 
 class Pokemon:
     """
@@ -35,7 +39,7 @@ class Pokemon:
                 p_ab['effects'] = [a_data['effect_entries'][i]['effect'] for i in range(len(a_data['effect_entries']))]
                 p_ab['generation'] = a_data['generation']['name']
                 preprocessed_abilities.append(p_ab)
-                
+
         self.abilities = preprocessed_abilities
         self.sprites = [pokemon_json['sprites'][key] for key in pokemon_json['sprites']]
         self.types = [pokemon_json['types'][i]['type']['name'] for i in range(len(pokemon_json['types']))]
@@ -62,5 +66,31 @@ def get_pokemon(pokemon_name: Optional[str]) -> dict:
             raise InvalidUsage("There are no pokemons with this name", 404)
 
         return pokemon.preprocess(pokemon_json)
+    except InvalidPokemonNameError as e:
+        raise e
+
+# Blueprint
+pokemon_blueprint = Blueprint('pokemon_blueprint', __name__, template_folder='templates')
+
+# Page
+@pokemon_blueprint.route("/pokemon_index")
+def pokemon_page() -> Any:
+    """
+    pokemon page
+    """
+    return render_template("pokemon.html", version=VERSION)
+
+# API
+@pokemon_blueprint.route("/pokemon", methods=["GET"])
+def pokemon() -> Any:
+    """
+    Get pokemon details by name
+    """
+    name: Optional[str] = request.args.get('name')
+    try:
+        if not name:
+            raise InvalidUsage("No pokemon name was passed", 400)
+        pokemon: dict = get_pokemon(name)
+        return jsonify(pokemon)
     except InvalidPokemonNameError as e:
         raise e

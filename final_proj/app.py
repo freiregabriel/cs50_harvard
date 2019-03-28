@@ -3,17 +3,29 @@ from flask import Flask, render_template, redirect, request, jsonify, Response, 
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
-from .exceptions import NoPokemonNameError, InvalidPokemonNameError, NoQuoteError, YoutubeError, InvalidUsage
-from .pokemon import get_pokemon, Pokemon
-from .quote import get_quote
-from .chuck import get_chuck_joke
-from .youtube import download_video
-from .hackernews import get_formatted_top_news
-from .settings import VERSION
 from datetime import datetime
 from typing import Any, Optional, Dict
 
+# exceptions
+from .exceptions import NoPokemonNameError, InvalidPokemonNameError, NoQuoteError, YoutubeError, InvalidUsage
+
+# utilities
+from .pokemon import pokemon_blueprint
+from .quote import quotes_blueprint
+from .chuck import chuck_blueprint
+from .youtube import youtube_blueprint
+from .hackernews import hackernews_blueprint
+from .settings import VERSION
+
+
 app = Flask(__name__)
+
+# register blueprints
+app.register_blueprint(pokemon_blueprint)
+app.register_blueprint(hackernews_blueprint)
+app.register_blueprint(chuck_blueprint)
+app.register_blueprint(quotes_blueprint)
+app.register_blueprint(youtube_blueprint)
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -28,7 +40,7 @@ app.jinja_env.filters['datetime'] = format_datetime
 
 # Ensure responses aren't cached
 @app.after_request
-def after_request(response:Any) -> Any:
+def after_request(response:Any) -> Response:
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
@@ -44,7 +56,7 @@ Session(app)
 db: SQL = SQL("sqlite:///utilities.db")
 
 # Error handling
-def apology(name: Optional[str], description: Optional[str], code: Optional[int]) -> dict:
+def apology(name: Optional[str], description: Optional[str], code: Optional[int]) -> Response:
     """
     handle error as JSON
     """
@@ -82,120 +94,12 @@ def cats() -> Any:
     """
     return render_with_version("cats.html")
 
-@app.route("/pokemon_index")
-def pokemon_page() -> Any:
-    """
-    pokemon page
-    """
-    return render_with_version("pokemon.html")
-
 @app.route("/country_finder_by_ip")
 def ip() -> Any:
     """
     ip page
     """
     return render_with_version("ip.html")
-
-@app.route("/chuck_norris_jokes")
-def chuck_page() -> Any:
-    """
-    chuck page
-    """
-    return render_with_version("chuck.html")
-
-@app.route("/youtube_video_downloader")
-def youtube_page() -> Any:
-    """
-    youtube page
-    """
-    return render_with_version("youtube.html")
-
-@app.route("/quick_hacker_news")
-def hackernews_page() -> Any:
-    """
-    hacker news page
-    """
-    return render_with_version("hackernews.html")
-
-# REST Apis
-@app.route("/api_hacker_news", methods=['GET'])
-def hackernews_api() -> Any:
-    """
-    Load hacker news stories
-    """
-    try:
-        # will return up to 5 news stories
-        news = get_formatted_top_news(limit=5)
-        return jsonify(news)
-    except HTTPException as e:
-        raise e
-
-@app.route("/pokemon", methods=["GET"])
-def pokemon() -> Any:
-    """
-    Get pokemon details by name
-    """
-    name: Optional[str] = request.args.get('name')
-    try:
-        if not name:
-            raise InvalidUsage("No pokemon name was passed", 400)
-        pokemon: dict = get_pokemon(name)
-        return jsonify(pokemon)
-    except InvalidPokemonNameError as e:
-        raise e
-
-@app.route("/quote", methods=["GET"])
-def quote() -> Any:
-    """
-    Get random Quote
-    """
-    try:
-        quote: Optional[dict] = get_quote()
-        if not quote:
-            raise InvalidUsage("No quote found this time, sorry", 404)
-        return jsonify(quote)
-    except NoQuoteError as e:
-        raise e
-
-@app.route("/chuck", methods=["GET"])
-def chuck_joke() -> Any:
-    """
-    Get random Chuck Norris joke
-    """
-    try:
-        quote = get_chuck_joke()
-
-        if not quote:
-            raise InvalidUsage("Sorry, no quote found this time", 404)
-
-        return jsonify(quote)
-
-    except NoQuoteError as e:
-        raise e
-
-@app.route('/download', methods=["GET"])
-def download_by_id() -> Any:
-    """
-    Download an youtube video
-    """
-    try:
-        url: Optional[str] = request.args.get('url')
-
-        # validate
-        if not url:
-            raise InvalidUsage("No URL was passed", 400)
-
-        # get video binary and video title from youtube api
-        binary, title = download_video(url)
-
-        # validate
-        if not binary or not title:
-            raise YoutubeError()
-
-        return Response(binary, headers={'Content-Disposition': 'attachment; '
-                                        'filename=' + f"{title}.mp4"})
-    except YoutubeError as e:
-        raise e
 
 @app.errorhandler(HTTPException)
 def errorhandler(e: HTTPException) -> Any:

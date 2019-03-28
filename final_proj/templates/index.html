@@ -3,7 +3,7 @@
     <div class="utils-be-together-section mdl-typography--text-center">
         <div class="logo-font utils-slogan">A bunch of utilities (or not) in one place</div>
         <div class="logo-font utils-sub-slogan">Your browser</div>
-        <blockquote id='quote'></blockquote>
+        <h5 id='quote'></h5>
     </div>
 </div>
 <script>
@@ -11,7 +11,7 @@
 
         let quote = document.querySelector('#quote');
         let quote_url = `${config.api}/quote`;
-        http.get(quote_url).then((res) => {
+        httpClient.get(quote_url).then((res) => {
             if (!res || !res.quoteText) {
                 handleError('No quote found');
                 return;
@@ -19,7 +19,7 @@
             M.toast({
                 html: 'Success!'
             });
-            let html = `${res.quoteText} <br> <small>${res.quoteAuthor}</small>`
+            let html = `${res.quoteText} <br> <small>"${res.quoteAuthor}"</small>`
             $(quote).html(html);
         }).catch(e => handleError(e))
     })

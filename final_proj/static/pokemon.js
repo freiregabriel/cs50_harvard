@@ -9,7 +9,8 @@ $(document).ready(function() {
 
     // Handle fetch click
     fetch_random_btn.onclick = (e) => {
-        // clear output element
+
+        // clear output
         _clear();
 
         // validate input value
@@ -25,7 +26,7 @@ $(document).ready(function() {
         
         M.toast({ html: 'Loading...' });
         // make http request to the server
-        http.get(`${pokemon_url}?name=${name}`).then((res) => {
+        httpClient.get(`${pokemon_url}?name=${name}`).then((res) => {
             // validate request
             if (!res || res.error) {
                 // handle invalid pokemon name error
@@ -69,58 +70,33 @@ $(document).ready(function() {
     // information UI section
     function _create_name_sec(res, section) {
         let { name, id, order, weight } = res;
-        section.appendChild(_make_h5(`${name}`));
-        section.appendChild(_make_p(`${_make_strong_str('Id: ')}${id}`));
-        section.appendChild(_make_p(`${_make_strong_str('Order: ')}${order}`));
-        section.appendChild(_make_p(`${_make_strong_str('Weight: ')}${weight}`));
+        section.appendChild(Utils.make_h5(`${name}`));
+        section.appendChild(Utils.make_p(`${Utils.make_strong_string('Id: ')}${id}`));
+        section.appendChild(Utils.make_p(`${Utils.make_strong_string('Order: ')}${order}`));
+        section.appendChild(Utils.make_p(`${Utils.make_strong_string('Weight: ')}${weight}`));
 
     }
 
     // abilities UI section
     function _create_ability_sec(res, section) {
-        section.appendChild(_make_h5(`Abilities`));
+        section.appendChild(Utils.make_h5(`Abilities`));
         let abilities = res['abilities'];
         for (let i = 0; i < abilities.length; i++) {
             let { name, effects, generation } = abilities[i];
-            section.appendChild(_make_p(`${_make_strong_str('Name: ')}${name}`));
-            section.appendChild(_make_p(`${_make_strong_str('Effect: ')}${effects}`));
-            section.appendChild(_make_p(`${_make_strong_str('Generation: ')}${generation}`));
-            section.appendChild(_make_divider());
+            section.appendChild(Utils.make_p(`${Utils.make_strong_string('Name: ')}${name}`));
+            section.appendChild(Utils.make_p(`${Utils.make_strong_string('Effect: ')}${effects}`));
+            section.appendChild(Utils.make_p(`${Utils.make_strong_string('Generation: ')}${generation}`));
+            section.appendChild(Utils.make_divider());
         }
     }
 
     // end UI sections functions
 
-    // below are some utility functions for HTML elements like h5, p, strong and divs
-    function _make_h5(text) {
-        let h5 = document.createElement('h5');
-        h5.textContent = text;
-        return h5;
-    }
-
-    function _make_p(html, cls = 'text-left') {
-        let p = document.createElement('p');
-        p.className = cls + ' flow-text';
-        p.style.margin = '10px';
-        $(p).html(html);
-        return p;
-    }
-
-    function _make_divider() {
-        let div = document.createElement('div');
-        div.className = 'divider';
-        return div;
-    }
-
-    function _make_strong_str(text) {
-        return `<strong>${text}</strong>`;
-    }
-
     // clear output UI
     function _clear() {
-        sprites_placeholder.innerHTML = "";
-        name_sec.innerHTML = "";
-        ability_sec.innerHTML = "";
+        Utils.removeChildren(sprites_placeholder);
+        Utils.removeChildren(name_sec);
+        Utils.removeChildren(ability_sec);
     }
 
     // initialize materialize tabs

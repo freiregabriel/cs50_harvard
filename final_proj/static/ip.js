@@ -1,18 +1,18 @@
 // https://api.ip2country.info/ip?5.6.7.8
 $(document).ready(function() {
-    let fetch_ip_btn = document.querySelector('#ip_fetch_btn');
-    let ip_input = document.querySelector('#ip_input');
-    let ip_data_placeholder = document.querySelector('#ipdata_placeholder');
+    const fetch_ip_btn = document.querySelector('#ip_fetch_btn');
+    const ip_input = document.querySelector('#ip_input');
+    const ip_data_placeholder = document.querySelector('#ipdata_placeholder');
     const ip_url = (ip) => `https://ipapi.co/${ip}/json/`;
 
     // add events
     fetch_ip_btn.onclick = (e) => {
-        let ip = ip_input.value;
+        const ip = ip_input.value;
         if (!ip) {
             handleError("No IP found");
             return;
         }
-        http.get(ip_url(ip)).then((res) => {
+        httpClient.get(ip_url(ip)).then((res) => {
             if (!res || !res.city) {
                 handleError('No Country found for this IP');
                 return;

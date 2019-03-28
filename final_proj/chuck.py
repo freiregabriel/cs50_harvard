@@ -1,10 +1,16 @@
 import requests
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 
-def get_chuck_joke() -> Dict[str, str]:
-    r = requests.get('https://api.chucknorris.io/jokes/random')
-    data: Dict[Any, Any] = r.json()
-    final: Dict[str, str] = {}
-    final['icon_url'] = data['icon_url']
-    final['value'] = data['value']
-    return final
+api = 'https://api.chucknorris.io/jokes/random'
+def get_chuck_joke() -> Optional[dict]:
+    # http req
+    r = requests.get(api)
+    if r.status_code == 200:
+        data: dict = r.json()
+
+        # i don't want all the data that comes from the api
+        final: dict = {}
+        final['icon_url'] = data['icon_url']
+        final['value'] = data['value']
+        return final
+    return None

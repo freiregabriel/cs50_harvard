@@ -283,6 +283,7 @@ header {
 to make cookie session on Flask
 ```python
 from flask import Flask, session
+from flask_session import Session
 
 app = Flask(__name__)
 
@@ -291,6 +292,7 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 # Create session
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 ```
 
 # SQL Database

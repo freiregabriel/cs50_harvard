@@ -16,19 +16,16 @@ from .chuck import chuck_blueprint
 from .youtube import youtube_blueprint
 from .hackernews import hackernews_blueprint
 from .login import login_blueprint
+from .register import registration_blueprint
 
 # Settings
 from .settings import VERSION
+from .database import create_tables
 
 app = Flask(__name__)
 
-# register blueprints
-app.register_blueprint(pokemon_blueprint)
-app.register_blueprint(hackernews_blueprint)
-app.register_blueprint(chuck_blueprint)
-app.register_blueprint(quotes_blueprint)
-app.register_blueprint(youtube_blueprint)
-app.register_blueprint(login_blueprint)
+# create database tables if they don't exist
+create_tables()
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -54,6 +51,16 @@ app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
+
+
+# register blueprints
+app.register_blueprint(pokemon_blueprint)
+app.register_blueprint(hackernews_blueprint)
+app.register_blueprint(chuck_blueprint)
+app.register_blueprint(quotes_blueprint)
+app.register_blueprint(youtube_blueprint)
+app.register_blueprint(login_blueprint)
+app.register_blueprint(registration_blueprint)
 
 # Error handling
 def apology(name: Optional[str], description: Optional[str], code: Optional[int]) -> Response:

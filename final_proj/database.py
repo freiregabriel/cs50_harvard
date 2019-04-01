@@ -4,7 +4,5 @@ from cs50 import SQL
 db: SQL = SQL("sqlite:///utilities.db")
 
 def create_tables():
+    """ create tables """
     db.execute('CREATE TABLE IF NOT EXISTS "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "username" TEXT NOT NULL, "hash" TEXT NOT NULL)')
-    pass
-
-create_tables()

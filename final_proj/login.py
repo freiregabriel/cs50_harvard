@@ -22,6 +22,10 @@ login_blueprint = Blueprint('login_blueprint', __name__, template_folder='templa
 
 @login_blueprint.route('/login', methods=['GET', 'POST'])
 def login_page():
+
+    # forget user id
+    session.clear()
+    
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')

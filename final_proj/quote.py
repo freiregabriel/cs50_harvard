@@ -3,12 +3,15 @@ from .settings import VERSION
 from .exceptions import InvalidUsage, NoQuoteError
 import requests
 from typing import Optional, Any
+
 lang = 'en'
 format_ = 'json'
 method = 'getQuote'
+
 def get_quote() -> Optional[dict]:
+    """ Returns a random quote in english """
     r = requests.get(f'http://api.forismatic.com/api/1.0/?lang={lang}&format={format_}&method={method}')
-    if r.status_code == 200:
+    if r.ok:
         return r.json()
     return None
 
@@ -18,9 +21,7 @@ quotes_blueprint = Blueprint('quotes_blueprint', __name__, template_folder='temp
 # API
 @quotes_blueprint.route("/quote", methods=["GET"])
 def quote() -> Any:
-    """
-    Get random Quote
-    """
+    """ Get random Quote """
     try:
         quote: Optional[dict] = get_quote()
         if not quote:

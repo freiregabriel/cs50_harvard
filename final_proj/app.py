@@ -1,4 +1,4 @@
-from cs50 import SQL
+
 from flask import Flask, render_template, redirect, request, jsonify, Response, session
 from flask_session import Session
 from tempfile import mkdtemp
@@ -15,10 +15,10 @@ from .quote import quotes_blueprint
 from .chuck import chuck_blueprint
 from .youtube import youtube_blueprint
 from .hackernews import hackernews_blueprint
+from .login import login_blueprint
 
 # Settings
 from .settings import VERSION
-
 
 app = Flask(__name__)
 
@@ -28,6 +28,7 @@ app.register_blueprint(hackernews_blueprint)
 app.register_blueprint(chuck_blueprint)
 app.register_blueprint(quotes_blueprint)
 app.register_blueprint(youtube_blueprint)
+app.register_blueprint(login_blueprint)
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -54,14 +55,9 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# Configure CS50 Library to use SQLite database
-db: SQL = SQL("sqlite:///utilities.db")
-
 # Error handling
 def apology(name: Optional[str], description: Optional[str], code: Optional[int]) -> Response:
-    """
-    handle error as JSON
-    """
+    """ handle error as JSON """
     response = jsonify({
         "name": name,
         "description": description,
@@ -71,41 +67,33 @@ def apology(name: Optional[str], description: Optional[str], code: Optional[int]
     return response
 
 def render_with_version(templateUrl: str):
-    """
-    reusable function to render template aways passing the current application version
-    """
+    """ reusable function to render template aways passing the current application version """
     return render_template(templateUrl, version=version)
 
 # Pages
 @app.route("/")
 def index() -> Any:
-    """Show portfolio of stocks"""
+    """ Show portfolio of stocks """
     return render_with_version("index.html")
 
 @app.route("/dogs")
 def dogs() -> Any:
-    """
-    dogs page
-    """
+    """ dogs page """
     return render_with_version("dogs.html")
 
 @app.route("/cats")
 def cats() -> Any:
-    """
-    cats page
-    """
+    """ cats page """
     return render_with_version("cats.html")
 
 @app.route("/country_finder_by_ip")
 def ip() -> Any:
-    """
-    ip page
-    """
+    """ ip page """
     return render_with_version("ip.html")
 
 @app.errorhandler(HTTPException)
 def errorhandler(e: HTTPException) -> Any:
-    """Handle error"""
+    """ Handle error """
     if not isinstance(e, HTTPException):
         e = InternalServerError()
 

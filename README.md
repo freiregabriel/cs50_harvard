@@ -331,7 +331,9 @@ SQLite is a lightweight database program that stores your data into a `file` `na
 
 ### create table
 usually with support of a client GUI
-`CREATE TABLE 'registrants' ('id' integer, 'name' varchar(255), 'dorm' varchar(255));`
+```sql
+CREATE TABLE 'registrants' ('id' integer, 'name' varchar(255), 'dorm' varchar(255));
+```
 ### show tables
 `SHOW TABLES` 
 ### delete table

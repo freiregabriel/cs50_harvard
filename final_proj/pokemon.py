@@ -7,10 +7,7 @@ from .exceptions import InvalidPokemonNameError, InvalidUsage
 # Functionality
 
 class Pokemon:
-    """
-        Pokemon class to make API request and preprocess results
-
-    """
+    """ Pokemon class to make API request and preprocess results """
     def __init__(self):
         self.pokemon_api_url: str = 'https://pokeapi.co/api/v2/pokemon'
 
@@ -26,7 +23,8 @@ class Pokemon:
 
     def preprocess(self, pokemon_json: dict) -> dict:
         """
-            Filter only the useful information of the object returned from @request_pokemon_or_url
+            Filter only the useful information of the object 
+            returned from @request_pokemon_or_url
         """
         abilities = pokemon_json['abilities']
         preprocessed_abilities = []
@@ -50,11 +48,9 @@ class Pokemon:
         return self.__dict__
  
     def request_pokemon_or_url(self, name: Optional[str]=None, url: Optional[str]=None) -> Optional[dict]:
-        """
-            Make request using pokemon name or api url
-        """
+        """ Make request using pokemon name or api url """
         r = requests.get(f'{self.pokemon_api_url}/{name}' if name is not None else f'{url}')
-        if r.status_code == 200:
+        if r.ok:
             return r.json()
         return None
 
@@ -75,17 +71,13 @@ pokemon_blueprint = Blueprint('pokemon_blueprint', __name__, template_folder='te
 # Page
 @pokemon_blueprint.route("/pokemon_index")
 def pokemon_page() -> Any:
-    """
-    pokemon page
-    """
+    """ pokemon page """
     return render_template("pokemon.html", version=VERSION)
 
 # API
 @pokemon_blueprint.route("/pokemon", methods=["GET"])
 def pokemon() -> Any:
-    """
-    Get pokemon details by name
-    """
+    """ Get pokemon details by name """
     name: Optional[str] = request.args.get('name')
     try:
         if not name:

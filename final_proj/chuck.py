@@ -8,7 +8,7 @@ api = 'https://api.chucknorris.io/jokes/random'
 def get_chuck_joke() -> Optional[dict]:
     # http req
     r = requests.get(api)
-    if r.status_code == 200:
+    if r.ok:
         data: dict = r.json()
 
         # i don't want all the data that comes from the api
@@ -24,17 +24,13 @@ chuck_blueprint = Blueprint('chuck_blueprint', __name__, template_folder='templa
 # Page
 @chuck_blueprint.route("/chuck_norris_jokes")
 def chuck_page() -> Any:
-    """
-    chuck page
-    """
+    """ chuck page """
     return render_template("chuck.html", version=VERSION)
 
 # API
 @chuck_blueprint.route("/chuck", methods=["GET"])
 def chuck_joke() -> Any:
-    """
-    Get random Chuck Norris joke
-    """
+    """ Get random Chuck Norris joke """
     try:
         quote = get_chuck_joke()
 

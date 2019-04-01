@@ -7,9 +7,7 @@ from typing import Tuple, Any, Optional
 from .exceptions import YoutubeError, InvalidUsage
 
 def download_video(link: Optional[str]) -> Tuple[ Optional[Any], Optional[str] ]:
-    """
-        Download video from youtube
-    """
+    """ Download video from youtube """
     # validate
     if not link:
         return None, None
@@ -34,17 +32,13 @@ youtube_blueprint = Blueprint('youtube_blueprint', __name__, template_folder='te
 # PAGE
 @youtube_blueprint.route("/youtube_video_downloader")
 def youtube_page() -> Any:
-    """
-    youtube page
-    """
+    """ youtube page """
     return render_template("youtube.html", version=VERSION)
 
 # API
 @youtube_blueprint.route('/download', methods=["GET"])
 def download_by_id() -> Any:
-    """
-    Download an youtube video
-    """
+    """ Download an youtube video """
     try:
         url: Optional[str] = request.args.get('url')
 

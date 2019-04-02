@@ -6,8 +6,6 @@ from typing import Optional
 import time
 from concurrent.futures import ThreadPoolExecutor
 
-loop = asyncio.get_event_loop()
-
 async def hello():
     print('Executed hello()')
     print('Hello')

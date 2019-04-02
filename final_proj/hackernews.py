@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, jsonify, request
 from .settings import VERSION
+from concurrent.futures import ThreadPoolExecutor
+import asyncio
 import requests
 from werkzeug.exceptions import HTTPException
 from datetime import datetime
@@ -18,14 +20,14 @@ def _get_top_news() -> Optional[List[float]]:
         return r.json()
     return None
 
-def _get_news_by_id(id: float) -> Optional[dict]:
+def _get_news_by_id(id: float, session: requests.Session) -> Optional[dict]:
     ''' returns a news object given its ID '''
-    r = requests.get(f'https://hacker-news.firebaseio.com/v0/item/{id}.json')
+    r = session.get(f'https://hacker-news.firebaseio.com/v0/item/{id}.json')
     if r.ok:
         return r.json()
     return None
 
-def get_formatted_top_news(limit:int=None) -> List[dict]:
+async def get_formatted_top_news(limit:int=None) -> List[dict]:
     ''' Returns a list of news as dictionaries '''
     top_news_ids: Optional[List[float]] = _get_top_news()
     
@@ -35,18 +37,18 @@ def get_formatted_top_news(limit:int=None) -> List[dict]:
 
     news_list: List[dict] = []
     c: int = 0
-    for id in top_news_ids:
-        # get news by id
-        news: Optional[dict] = _get_news_by_id(id)
-        if news is not None:
-            # format date
-            news['time'] = format_datetime(news['time'])
-            # append to dict
-            news_list.append(news)
 
-            c += 1
-            if limit and c > limit:
-                break
+    # get news by ID asynchronously
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        with requests.Session() as session:
+            loop = asyncio.get_event_loop()
+            tasks = [
+                loop.run_in_executor(executor, _get_news_by_id, 
+                                    *(id, session)) for id in top_news_ids[:limit]
+            ]
+            for response in await asyncio.gather(*tasks):
+                response['time'] = format_datetime(response['time'])
+                news_list.append(response)
 
     return news_list
 
@@ -65,7 +67,19 @@ def hackernews_api() -> Any:
     """ Load hacker news stories """
     try:
         # will return up to 5 news stories
-        news = get_formatted_top_news(limit=5)
+
+        # crete new event loop to avoid "RuntimeError: There is no current event loop in thread 'Thread-8'."
+        asyncio.set_event_loop(asyncio.new_event_loop())
+
+        # get loop
+        loop = asyncio.get_event_loop()
+        
+        # ensure request will be properly done
+        future = asyncio.ensure_future(get_formatted_top_news(limit=10))
+        
+        # run requests asynchronously
+        news = loop.run_until_complete(future)
+        loop.close()
         return jsonify(news)
     except HTTPException as e:
         raise e

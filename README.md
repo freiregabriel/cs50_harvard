@@ -283,6 +283,7 @@ header {
 to make cookie session on Flask
 ```python
 from flask import Flask, session
+from flask_session import Session
 
 app = Flask(__name__)
 
@@ -291,6 +292,7 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 # Create session
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 ```
 
 # SQL Database
@@ -329,7 +331,9 @@ SQLite is a lightweight database program that stores your data into a `file` `na
 
 ### create table
 usually with support of a client GUI
-`CREATE TABLE 'registrants' ('id' integer, 'name' varchar(255), 'dorm' varchar(255));`
+```sql
+CREATE TABLE 'registrants' ('id' integer, 'name' varchar(255), 'dorm' varchar(255));
+```
 ### show tables
 `SHOW TABLES` 
 ### delete table
@@ -340,29 +344,56 @@ usually with support of a client GUI
 ```sql
 INSERT INTO <table> (<columns>) VALUES (<values>)
 ```
-`INSERT INTO registrants (id, name, dorm) VALUES(1, 'Brian', 'Pennypacker');`
-`INSERT INTO registrants (id, name, dorm) VALUES(2, 'David', 'Matthews');`
+```sql
+INSERT INTO registrants (id, name, dorm) VALUES(1, 'Brian', 'Pennypacker');
+```
+```sql
+INSERT INTO registrants (id, name, dorm) VALUES(2, 'David', 'Matthews');
+```
 ### Alter table
-`ALTER TABLE customers ADD COLUMN id INT AUTO_INCREMENT PRIMARY KEY`
+```sql
+ALTER TABLE customers ADD COLUMN id INT AUTO_INCREMENT PRIMARY KEY
+```
 ### Select data
-`SELECT * FROM registrants;`
+```sql
+SELECT * FROM registrants;
+```
 #### fitler data
-`SELECT * FROM registrants WHERE dorm ='Matthews';`
-`SELECT name FROM registrants WHERE dorm ='Matthews';`
-`SELECT name FROM registrants WHERE dorm ='Matthews' ORDER BY id;`
-`SELECT password FROM users WHERE id < 12`
+```sql
+SELECT * FROM registrants WHERE dorm ='Matthews';
+```
+```sql
+SELECT name FROM registrants WHERE dorm ='Matthews';
+```
+```sql
+SELECT name FROM registrants WHERE dorm ='Matthews' ORDER BY id;
+```
+```sql
+SELECT password FROM users WHERE id < 12`
 #### Update data
-`UPDATE registrants SET dorm ='Canaday' WHERE id=1;`
+```sql
+UPDATE registrants SET dorm ='Canaday' WHERE id=1;
+```
 #### Delete data
-`DELETE FROM registrants WHERE id=1;`
+```sql
+DELETE FROM registrants WHERE id=1;
+```
 
 #### creation of a more complex table
-`CREATE TABLE 'registrants' ('id' integer PRIMARY KEY AUTOINCREMENT NOT NULL, 'name' varchar(255) NOT NULL, 'dorm' varchar(255), 'phone' char(10), 'email' varchar(255), 'birthdate' date, 'sports' varchar(1024))`
+```sql
+CREATE TABLE 'registrants' ('id' integer PRIMARY KEY AUTOINCREMENT NOT NULL, 'name' varchar(255) NOT NULL, 'dorm' varchar(255), 'phone' char(10), 'email' varchar(255), 'birthdate' date, 'sports' varchar(1024))
+```
 
 #### More complex select from two tables
-- `SELECT * FROM {TABLE1} JOIN {TABLE2} ON {DATA1} = {DATA2}`
-- `SELECT * FROM Artist, Album WHERE Artist.artistId = Album.artistId`
-- `SELECT * FROM Artist JOIN Album ON Artist.artistId = Album.artistId`
+- ```sql
+    SELECT * FROM {TABLE1} JOIN {TABLE2} ON {DATA1} = {DATA2}
+    ```
+- ```sql
+    SELECT * FROM Artist, Album WHERE Artist.artistId = Album.artistId
+    ```
+- ```sql
+    SELECT * FROM Artist JOIN Album ON Artist.artistId = Album.artistId
+    ```
 - ```sql
     SELECT users.name, moms.mother FROM 
     users JOIN moms 
@@ -371,8 +402,12 @@ INSERT INTO <table> (<columns>) VALUES (<values>)
 
 #### Index
 ##### no index
-`SELECT * FROM Album WHERE title LIKE '%Rock'` - characters before
-`SELECT * FROM Album WHERE title LIKE 'Rock%'` - characters after
+```sql
+SELECT * FROM Album WHERE title LIKE '%Rock'
+```
+```sql
+SELECT * FROM Album WHERE title LIKE 'Rock%'
+```
 #### Functions
 ```
 AVG

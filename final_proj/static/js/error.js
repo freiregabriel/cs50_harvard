@@ -1,4 +1,4 @@
-const handleError = (error) => {
+const handleError = (error /* string */) => {
     M.toast({
         html: error
     });

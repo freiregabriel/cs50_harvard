@@ -3,8 +3,8 @@ $(document).ready(function() {
     const breeds = [
         "affenpinscher", "african", "airedale", "akita", "appenzeller", "basenji", "beagle", "bluetick", "borzoi", "bouvier", "boxer", "brabancon", "briard", "bulldog", "bullterrier", "cairn", "cattledog", "chihuahua", "chow", "clumber", "cockapoo", "collie", "coonhound", "corgi", "cotondetulear", "dachshund", "dalmatian", "dane", "deerhound", "dhole", "dingo", "doberman", "elkhound", "entlebucher", "eskimo", "frise", "germanshepherd", "greyhound", "groenendael", "hound", "husky", "keeshond", "kelpie", "komondor", "kuvasz", "labrador", "leonberg", "lhasa", "malamute", "malinois", "maltese", "mastiff", "mastiff", "mastiff", "mexicanhairless", "mix", "mountain", "mountain", "newfoundland", "otterhound", "papillon", "pekinese", "pembroke", "pinscher", "pointer", "pointer", "pomeranian", "poodle", "poodle", "poodle", "pug", "puggle", "pyrenees", "redbone", "retriever", "ridgeback", "rottweiler", "saluki", "samoyed", "schipperke", "schnauzer", "setter", "sheepdog", "shiba", "shihtzu", "spaniel", "springer", "stbernard", "terrier", "vizsla", "weimaraner", "whippet", "wolfhound"
     ];
-    let fetch_random_btn = document.querySelector('#dog_fetch_btn');
-    let placeholder = document.querySelector('#dog_img_placeholder');
+    const fetch_random_btn = document.querySelector('#dog_fetch_btn');
+    const placeholder = document.querySelector('#dog_img_placeholder');
     const random_dog_url = 'https://dog.ceo/api/breeds/image/random';
     const breed_dog_url = (breed) => `https://dog.ceo/api/breed/${breed}/images/random`;
 
@@ -19,7 +19,7 @@ $(document).ready(function() {
     // add events
     fetch_random_btn.onclick = (e) => {
         // fetch server for random dog image
-        http.get(random_dog_url).then((res) => {
+        httpClient.get(random_dog_url).then((res) => {
             if (res.status && res.status == 'success') {
                 placeholder.src = res.message;
             } else {
@@ -30,8 +30,8 @@ $(document).ready(function() {
     }
 
     breed_selector.onchange = (e) => {
-        let breed = e.target.value;
-        http.get(breed_dog_url(breed)).then((res) => {
+        const breed = e.target.value;
+        httpClient.get(breed_dog_url(breed)).then((res) => {
             if (res.status && res.status == 'success') {
                 placeholder.src = res.message;
             } else {
@@ -43,8 +43,9 @@ $(document).ready(function() {
 
     // add option elements to a given select html element
     function add_select_options(select, opt_arr) {
-        for (let i = 0; i < opt_arr.length; i++) {
-            let option = document.createElement('option');
+        let i;
+        for (i = 0; i < opt_arr.length; i++) {
+            const option = document.createElement('option');
             option.value = opt_arr[i];
             option.textContent = opt_arr[i];
             select.add(option);

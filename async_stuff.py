@@ -37,7 +37,7 @@ def get_followers(profile: str, session) -> Optional[float]:
         graph_ql = profile_page['graphql']
         user = graph_ql['user']
         user['edge_owner_to_timeline_media'] = None
-        with open('user_information.json', 'w') as f:
+        with open(f'user_information_{profile}.json', 'w') as f:
             f.write(json.dumps(user, indent=4, sort_keys=True))
         follow_count = user['edge_followed_by']
         final: float = float(follow_count['count'])
@@ -50,6 +50,7 @@ async def get_followers_async():
     res = []
     with ThreadPoolExecutor(max_workers=5) as executor:
         with requests.Session() as session:
+            loop = asyncio.get_event_loop()
             tasks = [
                 loop.run_in_executor(executor, get_followers, *(profile, session)) for profile in profiles
                 # get_followers(*(profile,), session) for profile in profiles

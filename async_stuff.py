@@ -5,18 +5,7 @@ from bs4 import BeautifulSoup
 from typing import Optional
 import time
 from concurrent.futures import ThreadPoolExecutor
-
-async def hello():
-    print('Executed hello()')
-    print('Hello')
-    await asyncio.sleep(10)
-    print('World')
-
-async def say_something():
-    print('Executed say_something()')
-    print('Saying')
-    await asyncio.sleep(5)
-    print('Said something')
+import numba
 
 def get_followers(profile: str, session) -> Optional[float]:
     """
@@ -42,10 +31,11 @@ def get_followers(profile: str, session) -> Optional[float]:
         follow_count = user['edge_followed_by']
         final: float = float(follow_count['count'])
         print(f'Finished for {profile} - Followers {final}')
+        # await asyncio.sleep(0.01)
         return final
     return 0
 
-async def get_followers_async():
+async def get_followers_threading():
     profiles = ['gabrielfreiredev', 'freire.tatyana', 'sarahknight17', 'caabramacho', 'caabradapexte']
     res = []
     with ThreadPoolExecutor(max_workers=5) as executor:
@@ -58,13 +48,24 @@ async def get_followers_async():
             for response in await asyncio.gather(*tasks):
                 res.append(response)
     return res
+
+async def get_followers_async():
+    profiles = ['gabrielfreiredev', 'freire.tatyana', 'sarahknight17', 'caabramacho', 'caabradapexte']
+    with requests.Session() as session:
+        tasks = [
+            get_followers(*(profile, session)) for profile in profiles
+        ]
+        print(tasks)
+        await asyncio.gather(*tasks)
 # async_tasks = asyncio.gather(*[get_followers('gabrielfreiredev'), get_followers('freire.tatyana')
 #                                 ,get_followers('sarahknight17'),get_followers('caabramacho'), get_followers('caabradapexte')]) # Just like Promise.all([])
 def main():
     start = time.time()
     loop = asyncio.get_event_loop()
-    future = asyncio.ensure_future(get_followers_async())
+    # future = asyncio.ensure_future(get_followers_async())
+    future = asyncio.ensure_future(get_followers_threading())
     data = loop.run_until_complete(future) # will run all the async tasks in parallel
+    # data = loop.run_until_complete(future)
     end = time.time()
     elapsed = end - start
     print(f"Took {elapsed} ms")

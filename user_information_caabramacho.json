@@ -5,7 +5,7 @@
     "connected_fb_page": null,
     "country_block": false,
     "edge_felix_video_timeline": {
-        "count": 2,
+        "count": 3,
         "edges": [],
         "page_info": {
             "end_cursor": null,
@@ -13,10 +13,10 @@
         }
     },
     "edge_follow": {
-        "count": 1
+        "count": 2
     },
     "edge_followed_by": {
-        "count": 5251943
+        "count": 5279893
     },
     "edge_media_collections": {
         "count": 0,

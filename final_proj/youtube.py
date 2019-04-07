@@ -1,10 +1,14 @@
-from flask import Blueprint, render_template, jsonify, request, Response
-from .settings import VERSION
-from pytube import YouTube
-import requests
 import flask
+import requests
+from flask import Blueprint, render_template, jsonify, request, Response
+from pytube import YouTube
 from typing import Tuple, Any, Optional
+
+
+from .settings import VERSION
 from .exceptions import YoutubeError, InvalidUsage
+from .login import login_required
+
 
 def download_video(link: Optional[str]) -> Tuple[ Optional[Any], Optional[str] ]:
     """ Download video from youtube """
@@ -26,14 +30,18 @@ def download_video(link: Optional[str]) -> Tuple[ Optional[Any], Optional[str] ]
     except YoutubeError as e:
         raise e
 
+
 # Blueprint
 youtube_blueprint = Blueprint('youtube_blueprint', __name__, template_folder='templates')
 
+
 # PAGE
 @youtube_blueprint.route("/youtube_video_downloader")
+@login_required
 def youtube_page() -> Any:
     """ youtube page """
     return render_template("youtube.html", version=VERSION)
+
 
 # API
 @youtube_blueprint.route('/download', methods=["GET"])

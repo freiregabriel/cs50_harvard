@@ -1,17 +1,28 @@
-from flask import Blueprint, render_template, jsonify, request
-from .settings import VERSION
-from concurrent.futures import ThreadPoolExecutor
-import asyncio
 import requests
+import asyncio
+
+
+from flask import Blueprint, render_template, jsonify, request
+from concurrent.futures import ThreadPoolExecutor
 from werkzeug.exceptions import HTTPException
-from datetime import datetime
-from .exceptions import InvalidUsage
 from typing import Optional, Any, List, Dict
+from datetime import datetime
+
+
+from .settings import VERSION
+from .exceptions import InvalidUsage
+from .login import login_required
+
 
 def format_datetime(timestamp: float) -> str:
     """ receive a timestamp and convert to a formated date string -> dd/MM/YYYY - hh:mm """
     _dt: datetime = datetime.fromtimestamp(timestamp)
-    return f"{_dt.day}/{_dt.month}/{_dt.year} - {_dt.hour}:{_dt.minute}"
+    hour = f"0{_dt.hour}" if _dt.hour < 10 else _dt.hour
+    day = f"0{_dt.day}" if _dt.day < 10 else _dt.day
+    month = f"0{_dt.month}" if _dt.month < 10 else _dt.month
+    minute = f"0{_dt.minute}" if _dt.minute < 10 else _dt.minute
+    return f"{day}/{month}/{_dt.year} - {hour}:{minute}"
+
 
 def _get_top_news() -> Optional[List[float]]:
     ''' returns an array of IDs for each hacker news story '''
@@ -20,12 +31,14 @@ def _get_top_news() -> Optional[List[float]]:
         return r.json()
     return None
 
+
 def _get_news_by_id(id: float, session: requests.Session) -> Optional[dict]:
     ''' returns a news object given its ID '''
     r = session.get(f'https://hacker-news.firebaseio.com/v0/item/{id}.json')
     if r.ok:
         return r.json()
     return None
+
 
 async def get_formatted_top_news(limit:int=None) -> List[dict]:
     ''' Returns a list of news as dictionaries '''
@@ -52,14 +65,18 @@ async def get_formatted_top_news(limit:int=None) -> List[dict]:
 
     return news_list
 
+
 # Blueprint
 hackernews_blueprint = Blueprint('hackernews_blueprint', __name__, template_folder='templates')
 
+
 # Page
 @hackernews_blueprint.route("/quick_hacker_news")
+@login_required
 def hackernews_page() -> Any:
     """ hacker news page """
     return render_template("hackernews.html", version=VERSION)
+
 
 # API
 @hackernews_blueprint.route("/api_hacker_news", methods=['GET'])

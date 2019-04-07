@@ -1,8 +1,13 @@
+import requests
+
+
 from flask import Blueprint, render_template, jsonify, request
+from typing import Dict, Any, Optional
+
+
 from .settings import VERSION
 from .exceptions import InvalidUsage, NoQuoteError
-import requests
-from typing import Dict, Any, Optional
+
 
 api = 'https://api.chucknorris.io/jokes/random'
 def get_chuck_joke() -> Optional[dict]:
@@ -18,14 +23,17 @@ def get_chuck_joke() -> Optional[dict]:
         return final
     return None
 
+
 # Blueprint
 chuck_blueprint = Blueprint('chuck_blueprint', __name__, template_folder='templates')
+
 
 # Page
 @chuck_blueprint.route("/chuck_norris_jokes")
 def chuck_page() -> Any:
     """ chuck page """
     return render_template("chuck.html", version=VERSION)
+
 
 # API
 @chuck_blueprint.route("/chuck", methods=["GET"])

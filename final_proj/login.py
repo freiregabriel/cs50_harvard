@@ -1,8 +1,13 @@
-from functools import wraps
 from flask import session, redirect, Blueprint, request, render_template
-from .exceptions import InvalidUsage
+
+
+from functools import wraps
 from werkzeug.security import check_password_hash, generate_password_hash
+
+
+from .exceptions import InvalidUsage
 from .database import db
+
 
 def login_required(f):
     """
@@ -20,9 +25,10 @@ def login_required(f):
 
 login_blueprint = Blueprint('login_blueprint', __name__, template_folder='templates')
 
+
 @login_blueprint.route('/login', methods=['GET', 'POST'])
 def login_page():
-
+    """ Log user in """
     # forget user id
     session.clear()
     
@@ -30,7 +36,7 @@ def login_page():
         username = request.form.get('username')
         password = request.form.get('password')
         if not username or not password:
-            raise InvalidUsage('Invalid credentials.', 403)
+            return render_template('error.html', error_name='Invalid credentials.', error_desc='Invalid credentials.', error_code=403)
         
         # check database username
         rows = db.execute("SELECT * FROM users WHERE username = :username",
@@ -38,7 +44,7 @@ def login_page():
 
         # ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], password):
-            raise InvalidUsage("invalid username and/or password", 403)
+            return render_template('error.html', error_name="invalid username and/or password", error_desc="invalid username and/or password", error_code=403)
         
         # add user to session
         session["user_id"] = rows[0]["id"]
@@ -48,3 +54,14 @@ def login_page():
 
     # render login template
     return render_template('login.html')
+
+
+@login_blueprint.route("/logout")
+def logout():
+    """Log user out"""
+
+    # Forget any user_id
+    session.clear()
+
+    # Redirect user to login form
+    return redirect("/")

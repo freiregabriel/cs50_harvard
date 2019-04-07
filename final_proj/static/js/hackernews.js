@@ -23,9 +23,9 @@ $(document).ready(function() {
         a.className = 'collection-item';
         $(a).html(`
             <h5>
-                ${data['title']} <small>Score: ${data['score']}</small>
+                ${data['title']} <span id='date'>${data['time']}</span><small>Score: ${data['score']}</small>
             </h5>
-            <p>${data['title']} - ${data['time']} 
+            <p>${data['title']}
                 <br>
                 <small>by ${data['by']}</small>
             </p>

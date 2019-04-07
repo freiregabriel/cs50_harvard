@@ -1,7 +1,9 @@
 from cs50 import SQL
 
+
 # Configure CS50 Library to use SQLite database
 db: SQL = SQL("sqlite:///utilities.db")
+
 
 def create_tables():
     """ create tables """

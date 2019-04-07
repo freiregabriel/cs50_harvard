@@ -5,6 +5,11 @@
         <div class="logo-font utils-sub-slogan">Your browser</div>
         <h5 id='quote'></h5>
     </div>
+    {% if not session['user_id'] %}
+    <div class='utils-registration-call mdl-typography--text-center'>
+        <a href='/register'>Register</a> <p>to be able to access Premium(P) utilities</p>
+    </div>
+    {% endif %}
 </div>
 <script>
     $(document).ready(function() {

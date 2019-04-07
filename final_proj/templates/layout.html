@@ -45,16 +45,18 @@
                 <!-- Navigation -->
                 <div class="utils-navigation-container">
                     <div class="utils-navigation mdl-navigation">
-                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/">Home</a>
+                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/">Home</a> 
+                        {% if session['user_id'] %}
+                            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/logout">Logout</a> 
+                        {% else %}
+                            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/login">Login</a>
+                            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/register">Register</a>
+                        {% endif %}
+                        {% if version %}
+                            <span>Version: {{ version }}</span>
+                        {% endif %}
                     </div>
                 </div>
-                {% if version %}
-                <div>
-                    <div class="utils-navigation mdl-navigation">
-                        <span>Version: {{ version }}</span>
-                    </div>
-                </div>
-                {% endif %}
                 <button class="utils-more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-button">
                     <i class="material-icons">more_vert</i>
                     </button>
@@ -81,8 +83,8 @@
                 <div class="utils-drawer-separator"></div>
                 <span class="mdl-navigation__link" href="">Misc</span>
                 <a class="mdl-navigation__link" href="/country_finder_by_ip">Find IP Country</a>
-                <a class="mdl-navigation__link" href="/youtube_video_downloader">Download Youtube Video</a>
-                <a class="mdl-navigation__link" href="/quick_hacker_news">Quick Hacker News</a>
+                <a class="mdl-navigation__link" href="/youtube_video_downloader">Youtube Downloader <span class="new badge utils-badge" data-badge-caption="">P</span></a>
+                <a class="mdl-navigation__link" href="/quick_hacker_news">Quick Hacker News <span class="new badge utils-badge" data-badge-caption="">P</span></a>
                 <div class="utils-drawer-separator"></div>
                 <span class="mdl-navigation__link" href="">For developers</span>
                 <a class="mdl-navigation__link" href="">App developer resources</a>

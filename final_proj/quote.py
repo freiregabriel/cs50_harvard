@@ -4,9 +4,11 @@ from .exceptions import InvalidUsage, NoQuoteError
 import requests
 from typing import Optional, Any
 
+
 lang = 'en'
 format_ = 'json'
 method = 'getQuote'
+
 
 def get_quote() -> Optional[dict]:
     """ Returns a random quote in english """
@@ -15,8 +17,10 @@ def get_quote() -> Optional[dict]:
         return r.json()
     return None
 
+
 # Blueprint
 quotes_blueprint = Blueprint('quotes_blueprint', __name__, template_folder='templates')
+
 
 # API
 @quotes_blueprint.route("/quote", methods=["GET"])

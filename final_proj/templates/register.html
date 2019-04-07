@@ -2,12 +2,22 @@
 <div class="utils-content mdl-layout__content">
     <div class="utils-be-together-section mdl-typography--text-center">
         <div class="logo-font utils-slogan">Register</div>
-        <div class="logo-font utils-sub-slogan">to login</div>
-        <!-- username field -->
-        
-        <!-- password field -->
-        
-        <!-- password again field -->
+        <div class="logo-font utils-sub-slogan">to be able to access Premium(P) utilities</div>
+        <form class='utils-form' action='/register' method='POST'>
+            <div class="input-field col s12">
+                <input id="username" type="text" name="username" class="validate">
+                <label for="username">Username</label>
+            </div>
+            <div class="input-field col s12">
+                <input id="password" type="password" name="password" class="validate">
+                <label for="password">Password</label>
+            </div>
+            <div class="input-field col s12">
+                <input id="confirmation" type="password" name="confirmation" class="validate">
+                <label for="confirmation">Confirm password</label>
+            </div>
+            <button type="submit" class="btn-large waves-effect waves-yellow">Register</button>
+        </form>
     </div>
 </div>
 {% endblock %}

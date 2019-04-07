@@ -1,11 +1,13 @@
-from flask import Blueprint, render_template, jsonify, request
 import requests
+from flask import Blueprint, render_template, jsonify, request
 from typing import Any, Optional, List, Dict
+
+
 from .settings import VERSION
 from .exceptions import InvalidPokemonNameError, InvalidUsage
 
-# Functionality
 
+# Functionality
 class Pokemon:
     """ Pokemon class to make API request and preprocess results """
     def __init__(self):
@@ -54,7 +56,9 @@ class Pokemon:
             return r.json()
         return None
 
+
 def get_pokemon(pokemon_name: Optional[str]) -> dict:
+    """ Returns a pokemon by name """
     pokemon: Pokemon = Pokemon()
     try:
         pokemon_json: Optional[dict] = pokemon.request_pokemon_or_url(name=pokemon_name)
@@ -65,14 +69,17 @@ def get_pokemon(pokemon_name: Optional[str]) -> dict:
     except InvalidPokemonNameError as e:
         raise e
 
+
 # Blueprint
 pokemon_blueprint = Blueprint('pokemon_blueprint', __name__, template_folder='templates')
+
 
 # Page
 @pokemon_blueprint.route("/pokemon_index")
 def pokemon_page() -> Any:
     """ pokemon page """
     return render_template("pokemon.html", version=VERSION)
+
 
 # API
 @pokemon_blueprint.route("/pokemon", methods=["GET"])

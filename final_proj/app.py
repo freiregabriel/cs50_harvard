@@ -127,3 +127,6 @@ def errorhandler(e: HTTPException) -> Any:
 # Listen for errors
 for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
+
+
+# TODO: add more utilities in the future like, but not for final project (`json prettify`, `xml prettify`, `html prettify`, `js prettify/uglify`, `css prettify/uglify`)

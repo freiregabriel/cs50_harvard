@@ -68,26 +68,31 @@ struct Person {
 };
 
 int main(int argc, char const *argv[]) {
-    int a = 1;
-    string s{"foo"};
-    vector<int> values{1,2,3};
-    map<string, string> capitals {
-        {
-            "UK", "London"
-        }
-    };
+    printf("%d\n", argc);
+    if (argc > 1) {
+        printf("Profile %s\n", argv[1]);
+    }
+    // int a = 1;
+    // string s{"foo"};
+    // vector<int> values{1,2,3};
+    // map<string, string> capitals {
+    //     {
+    //         "UK", "London"
+    //     }
+    // };
 
-    Person p{"Gabriel", 28};
+    // Person p{"Gabriel", 28};
     
-    printf("Hello %s of age %i", p.name, p.age);
-    cout << "Please enter two numbers: " << endl;
-    int x,y;
-    cin >>x>>y;
-    Calculator c;
-    c.PrimeGenerator(x, y);
+    // printf("Hello %s of age %i", p.name, p.age);
+
+    // cout << "Please enter two numbers: " << endl;
+    // int x,y;
+    // cin >>x>>y;
+    // Calculator c;
+    // c.PrimeGenerator(x, y);
     
-    cin.ignore();
-    cin.get();
+    // cin.ignore();
+    // cin.get();
     
     return 0;
 }

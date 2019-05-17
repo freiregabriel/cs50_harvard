@@ -1,3 +1,5 @@
 .mypy_cache
 *.pyc
 **/*.pyc
+.vscode
+.vscode_bck
